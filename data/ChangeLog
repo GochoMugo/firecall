@@ -1,0 +1,23 @@
+---------- Version 0.1.0 ----------
+[29-05-2014]    +   '.onChange()' method and its helper function '.stop()' added. 
+                                The '.onChange()' on a Firebase instance creates a Watcher that watches a  location in Firebase for changes.
+                                The '.stop()' method on a Watcher stops the watch.
+[30-05-2014]    -   '.get_arg()' method removed. This method is no longer required in the backend.
+                        +   Optional 'auth' parameter used while creating the Firebase Instance will persist in all transactions on that firebase.
+                                There's no need to authenticate repeatedly
+                        +   'error=' parameter may be assigned to a function in asynchronous method. 
+                                Error would be passed to the function assigned.
+                                Errors: 
+                                    * "EnvironmentError": Security Rules Violation
+                                    * "KeyError": Argument for a Mandatory option has been left out 
+                                Errors (from Requests):
+                                    * "ConnectionError": maximum retries of request exceeded. Usually caused by 
+                                        Network problems
+                        +   'ignore_error=True' parameter for Watch. If set to False, the Watch will be stopped once an error occurs.
+                                Otherwise it will continue.
+                        +   'error=' parameter may be assigned to the Firebase() initializing function. 
+                                An invalid URL will make the function assign a broken instance that can not do anything.
+                                The function assigned to the parameter will be called incase a firebase instance fails to be created 
+                                successfully. See what makes a firebase URL valid.
+                                Error:
+                                    * "ValueError": an invalid firebase URL 
