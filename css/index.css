@@ -1,0 +1,10 @@
+.markdown {
+    display: none;
+}
+
+.stats {
+    text-align: right;
+}
+.stats table {
+    display: inline;
+}

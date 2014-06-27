@@ -4,8 +4,10 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="chrome=1">
         <title>firebasin | v0.0.0</title>
-        <link rel="stylesheet" href="stylesheets/styles.css">
-        <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+        <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="css/pygment_trac.css">
+        <link rel="stylesheet" href="css/prism.css">
+        <link rel="stylesheet" href="css/index.css">
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
         <!--[if lt IE 9]>
         <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -16,6 +18,29 @@
               <header>
                     <h1>Firebasin</h1>
                     <p>A Python Implementation of the <a href="https://www.firebase.com/docs/rest-api-quickstart.html">Firebase REST API</a></p>
+                    
+                    <!--Stats-->
+                    <section class='stats'>
+                        <table>
+                            <tr>
+                                <td>Version</td>
+                                <td>0.1.0</td>
+                            </tr>
+                            <tr>
+                                <td>Python</td>
+                                <td>2.7</td>
+                            </tr>
+                            <tr>
+                                <td>Development Status</td>
+                                <td>3 - Alpha</td>
+                            </tr>
+                            <tr>
+                                <td>Last Updated</td>
+                                <td>30th May, 2014</td>
+                            </tr>
+                        </table>
+                    </section>
+                    
                     <p class="view"><a href="http://github.com/GochoMugo/firebasin">View the Project on GitHub <small>GochoMugo/firebasin</small></a></p>
                     <ul>
                         <li><a href="https://github.com/GochoMugo/firebasin/zipball/master">Download <strong>ZIP File</strong></a></li>
@@ -24,23 +49,237 @@
                 </ul>
             </header>
             
-            <div id="readme"></div>
+<section class='markdown' data-target="content">
+# Installation #
+## Prerequisites ##
+This library largely uses the [Requests][Requests] Library. For **firebasin** to work, you need to have installed **Requests**. To install, use **pip**:
+
+$bash$ $ sudo pip install requests $end$
+
+## Installing ##
+Now comes the goodness. To install **firebasin**, just:
+
+$bash$ $ sudo pip install firebasin $end$
+
+# Getting Started #
+
+1.  Import the **firebasin** library:
+
+    
+    $python$ import firebasin $end$
+    
+*   Create a *Firebase* instance:
+
+    $python$ my_firebase = firebasin.Firebase("https://my_firebase_name.firebaseio.com") $end$
+
+    While creating the Firebase instance, you might pass an access token to `auth` argument like shown below. The access token will persist across all transactions with the Firebase, unless you explicitly pass another access token to a method.
+
+    $python$ 
+    my_firebase = firebasin.Firebase("https://my_firebase_name.firebaseio.com", auth="access_token_here")
+    $end$ 
+
+    Firebase is now ready to be used. It's time to conquer the World.
+
+## Basic Methods ##
+
+These are the basic methods available to any Firebase
+
+1.  $$python$$ .root() $$end$$
+
+    Get a Firebase reference to the root of the Firebase. 
+
+    * Requires No arguments.
+    * Returns a String
+
+    Example:
+    $python$ print my_firebase.root() $end$
+    <br>
+
+*  $$python$$ .name() $$end$$
+
+    Get the last token of this location's URL.
+
+    * Requires No arguments
+    * Returns a String
+
+    Example:
+    $python$ print my_firebase.name() $end$
+    <br>
+
+* $$python$$ .parent()  $$end$$
+
+    Get a Firebase instance with the parent Location as its URL
+
+    * Requires No arguments
+    * Returns a new Firebase Instance
+
+    Example:
+    $python$ new_parent = my_firebase.parent() $end$
+    <br>
+
+* $$python$$ .child(**kwargs) $$end$$
+
+    Get a Firebase instance with a child location as its URL
+
+    * Requires:
+        * point="relative_URL_to_child"
+    * Returns a Firebase Instance
+
+    Example:
+    $python$ new_child = my_firebase.child(point="/child") $end$
+    <br>
+
+## Synchronous Methods ##
+
+A Firebase instance has different methods that let you transact with it. The methods shown below are **Synchronous**. This means that:
+    
+* Python won't wait for the response, it will continue executing following lines of code
+* You should NOT assign return value to a variable. Doing this will always assign $$python$$ None $$end$$
+* You will have to use a callback to manipulate returned data from a request
+
+**Note:** There are also **Asynchronous** methods you can use. Read along to see how to use them.
+
+* $$python$$ .get(**kwargs) $$end$$
+
+    Get data a particular location on your Firebase
+
+    * Requires:
+        * point="location_to_read"
+        * auth="access_token" (Optional)
+        * callback=name_of_a_function (Optional)
+        * error=name_of_a_function (Optional)
+    * Returns `None`. Data fetched is passed to the callback function, if specified.
+
+    Example:
+$python$
+# Callback function definition
+def hello(data):
+    print data
+    
+# Making a 'GET' request
+my_firebase.get(point="/child", auth="Ja2f29f4Gsk2d3bhxW2d8vDlK", callback=hello)
+$end$
+
+*   $$python$$ .put(**kwargs) $$end$$
+
+    Write data into your Firebase
+
+    * Requires:
+        * point="location_to_read"
+        * data="data_to_put"
+        * auth="access_token" (Optional)
+        * callback=name_of_a_function (Optional)
+        * error=name_of_a_function (Optional)
+    * Returns `None`. Data you just put is passed to the callback function, if specified.
+
+*   $$python$$ .delete(**kwargs) $$end$$
+
+    Delete data from your Firebase
+
+    * Requires:
+        * point="location_to_delete"
+        * auth="access_token" (Optional)
+        * callback=name_of_a_function (Optional)
+        * error=name_of_a_function (Optional)
+    * Returns `None`. A string saying `null` is passed to the callback function, if specified.
+
+* $$python$$ .export(**kwargs) $$end$$
+
+    Export data from a location on your Firebase
+
+    * Requires:
+        * point="location_to_read"
+        * auth="access_token" (Optional)
+        * path="UNIX_path_to_file_to_write_to" (Optional)
+        * callback=name_of_a_function (Optional)
+        * error=name_of_a_function (Optional)
+    * Returns `None`. Data you just exported is passed to the callback function, if specified.
+
+    **Note:** if the $$python$$ path $$end$$ argument is not given, this will behave similar to $$python$$ .get(**kwargs) $$end$$
+
+* $$python$$ onChange(**kwargs) $$end$$
+
+    Poll for changes at a Location on your Firebase.
+
+    * Requires:
+        * point="location_to_read"
+        * auth="access_token" (Optional)
+        * callback=name_of_a_function (Optional)
+        * error=name_of_a_function (Optional)
+        * ignore_error=True (Optional) - Whether to keep watching incase of an error or make it Stop
+    * Returns an Object representing the Watch. This object has one method:
+        *   _.stop(number_of_seconds)_ - Passing an integer or float will cause the watch to be stopped after the specified number of seconds. If no number is passed, the watch will be stopped as soon as Possible.
+
+$python$
+watch = my_firebase.onChange(point="/watch_here", callback=keep_printing) # Creates a watch Object
+watch.stop(20) # The Watch will be stopped after 20 seconds
+$end$
+
+**Note:** 
+
+* there's **No** synchronous flavor of this method. For obvious reasons.
+* the stopping of a watch may take longer or shorter time for the action to kick in. This depends on your System.
+
+
+## Asynchronous Methods ##
+
+The methods are also available in synchronous flavor. To get a method to work synchronously, append "_sync" to the name of the method.
+
+Example:
+
+$python$
+user = my_firebase.get_sync("/user")
+# Python will wait for the response before executing the next line of code
+# Callback arguments passed will be ignored
+$end$
+
+## Callbacks and Errors ##
+
+In all the synchronous methods, a **Callback** can be assigned. The callback will be executed once response is received. In the case of `.onChange()` method, the callback will be inserted every time data changes at the point specified. 
+
+Functions assigned to **error** are executed when an error occurs while executing the action. The following errors may be caught:
+
+1. $$python$$ EnvironmentError $$end$$ : This is caused by Trying to access a non-existant Firebase or Security Rules violation while trying to execute a query
+2. $$python$$ KeyError $$end$$ : This is caused when you do **not** pass a required argument to any function
+3. $$python$$ ConnectionError $$end$$ : This will occur mostly due to Network problems
+
+If you wanted to catch errors according to this classes, you could do:
+
+$python$
+def caught_an_error(err):
+    if err.__class__.__name__ == "KeyError":
+        print("KeyError: " + str(err))
+    elif err.__class__.__name__ == "EnvironmentError":
+        print("EnvironmentError: " + str(err))
+    elif err.__class__.__name__ == "ConnectionError":
+        print("ConnectionError: " + str(err))
+    else:
+        print(err.__class__.__name__ + str(err))
+$end$
+
+**Note:** All callbacks and error handling functions should be defined before assigning them to a method. Or else you love Bugs. 
+
+## Issues
+
+Incase you encounter a bug, even if you could fix it yourself, please share with your fellow Pythonista :-) at the [Issues page](https://github.com/GochoMugo/firebasin/issues)
+
+**Conquer the World with Python**
+
+
+
+[Requests]:http://docs.python-requests.org/ "Site for Requests Library"
+</section>
+<section id="content"></section>
         
             <footer>
                 <p>This project is maintained by <a href="http://github.com/GochoMugo">Gocho Mugo</a></p>
                 <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
             </footer>
         </div>
-        <script src="javascripts/scale.fix.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
-        <script src="javascripts/showdown.js"></script>
-        <script type="text/javascript">
-            $.get("/data/README.md", 
-                    function (readme) {
-                        var converter = new Showdown.converter(),
-                                html = converter.makeHtml(readme);
-                        $("#readme").append(html);
-                    });
-        </script>
+        <script src="js/scale.fix.js"></script>
+        <script src="js/jquery-1.10.2.js"></script>
+        <script src="js/showdown.js"></script>
+        <script src="js/prism.js" data-manual></script>
+        <script src="js/index.js"></script>
     </body>
 </html>
