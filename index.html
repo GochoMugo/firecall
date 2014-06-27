@@ -1,9 +1,9 @@
 <!doctype html>
-<html>
+<html lang="en">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="chrome=1">
-        <title>firebasin | v0.0.0</title>
+        <title>firebasin | v0.1.0</title>
         <link rel="stylesheet" href="css/styles.css">
         <link rel="stylesheet" href="css/pygment_trac.css">
         <link rel="stylesheet" href="css/prism.css">
@@ -122,7 +122,7 @@ These are the basic methods available to any Firebase
     Get a Firebase instance with a child location as its URL
 
     * Requires:
-        * point="relative_URL_to_child"
+        * point="relative\_URL\_to\_child"
     * Returns a Firebase Instance
 
     Example:
@@ -144,10 +144,10 @@ A Firebase instance has different methods that let you transact with it. The met
     Get data a particular location on your Firebase
 
     * Requires:
-        * point="location_to_read"
-        * auth="access_token" (Optional)
-        * callback=name_of_a_function (Optional)
-        * error=name_of_a_function (Optional)
+        * point="location\_to_read"
+        * auth="access\_token" (Optional)
+        * callback=name\_of\_a\_function (Optional)
+        * error=name\_of\_a\_function (Optional)
     * Returns `None`. Data fetched is passed to the callback function, if specified.
 
     Example:
@@ -165,11 +165,11 @@ $end$
     Write data into your Firebase
 
     * Requires:
-        * point="location_to_read"
-        * data="data_to_put"
-        * auth="access_token" (Optional)
-        * callback=name_of_a_function (Optional)
-        * error=name_of_a_function (Optional)
+        * point="location\_to\_read"
+        * data="data\_to\_put"
+        * auth="access\_token" (Optional)
+        * callback=name\_of\_a\_function (Optional)
+        * error=name\_of\_a\_function (Optional)
     * Returns `None`. Data you just put is passed to the callback function, if specified.
 
 *   $$python$$ .delete(**kwargs) $$end$$
@@ -177,10 +177,10 @@ $end$
     Delete data from your Firebase
 
     * Requires:
-        * point="location_to_delete"
-        * auth="access_token" (Optional)
-        * callback=name_of_a_function (Optional)
-        * error=name_of_a_function (Optional)
+        * point="location\_to\_delete"
+        * auth="access\_token" (Optional)
+        * callback=name\_of\_a\_function (Optional)
+        * error=name\_of\_a\_function (Optional)
     * Returns `None`. A string saying `null` is passed to the callback function, if specified.
 
 * $$python$$ .export(**kwargs) $$end$$
@@ -188,11 +188,11 @@ $end$
     Export data from a location on your Firebase
 
     * Requires:
-        * point="location_to_read"
-        * auth="access_token" (Optional)
-        * path="UNIX_path_to_file_to_write_to" (Optional)
-        * callback=name_of_a_function (Optional)
-        * error=name_of_a_function (Optional)
+        * point="location\_to\_read"
+        * auth="access\_token" (Optional)
+        * path="UNIX\_path\_to\_file\_to\_write\_to" (Optional)
+        * callback=name\_of\_a\_function (Optional)
+        * error=name\_of\_a\_function (Optional)
     * Returns `None`. Data you just exported is passed to the callback function, if specified.
 
     **Note:** if the $$python$$ path $$end$$ argument is not given, this will behave similar to $$python$$ .get(**kwargs) $$end$$
@@ -202,10 +202,10 @@ $end$
     Poll for changes at a Location on your Firebase.
 
     * Requires:
-        * point="location_to_read"
-        * auth="access_token" (Optional)
-        * callback=name_of_a_function (Optional)
-        * error=name_of_a_function (Optional)
+        * point="location\_to\_read"
+        * auth="access\_token" (Optional)
+        * callback=name\_of\_a\_function (Optional)
+        * error=name\_of\_a\_function (Optional)
         * ignore_error=True (Optional) - Whether to keep watching incase of an error or make it Stop
     * Returns an Object representing the Watch. This object has one method:
         *   _.stop(number_of_seconds)_ - Passing an integer or float will cause the watch to be stopped after the specified number of seconds. If no number is passed, the watch will be stopped as soon as Possible.
@@ -235,7 +235,7 @@ $end$
 
 ## Callbacks and Errors ##
 
-In all the synchronous methods, a **Callback** can be assigned. The callback will be executed once response is received. In the case of `.onChange()` method, the callback will be inserted every time data changes at the point specified. 
+In all the synchronous methods, a **Callback** can be assigned. The callback will be executed once response is received. In the case of $$python$$ .onChange() $$end$$ method, the callback will be inserted every time data changes at the point specified. 
 
 Functions assigned to **error** are executed when an error occurs while executing the action. The following errors may be caught:
 
@@ -263,13 +263,13 @@ $end$
 
 Incase you encounter a bug, even if you could fix it yourself, please share with your fellow Pythonista :-) at the [Issues page](https://github.com/GochoMugo/firebasin/issues)
 
-**Conquer the World with Python**
+<center>**Conquer the World with Python**</center>
 
 
 
 [Requests]:http://docs.python-requests.org/ "Site for Requests Library"
 </section>
-<section id="content"></section>
+            <section id="content"></section>
         
             <footer>
                 <p>This project is maintained by <a href="http://github.com/GochoMugo">Gocho Mugo</a></p>
