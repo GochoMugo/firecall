@@ -4,11 +4,13 @@ from distutils.core import setup
 setup(
     name = "firebasin",
     packages = ["firebasin"],
-    version = "0.0.0",
+    version = "0.1.0",
     author = "Gocho Mugo I",
     author_email = "gochomugo.developer@gmail.com",
     url = "https://gochomugo.github.io/firebasin/",
+    download_url = "https://github.com/GochoMugo/firebasin/zipball/master",
     description = "Python library for Firebase API",
+    keywords = ["firebase", "firebasin", "REST"],
     long_description = "A Python Implementation of the Firebase API. http://firebase.com/",
     classifiers = [
         "Development Status :: 3 - Alpha",
