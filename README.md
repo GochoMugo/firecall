@@ -9,7 +9,7 @@ A Python Library for the [Firebase](https://firebaseio.com/) API
 |Version                    | 0.1.0                   |
 |Python                     | 2.7                      |
 |Development Status | 3 - Alpha            |
-|Last Updated            | 30th May, 2014    |
+|Last Updated            | 27th June, 2014    |
 
 > The Development Status of this Library warrants me to say that this API will keep growing. That's a good thing, right?
 
@@ -102,15 +102,15 @@ Example:
 new_child = my_firebase.child(point="/child")
 ```
 
-### Synchronous Methods
+### Asynchronous Methods
 
-A Firebase instance has different methods that let you transact with it. The methods shown below are **Synchronous**. This means that:
+A Firebase instance has different methods that let you transact with it. The methods shown below are **Asynchronous**. This means that:
     
 * Python won't wait for the response, it will continue executing following lines of code
 * You should NOT assign return value to a variable. Doing this will always assign `None`
 * You will have to use a callback to manipulate returned data from a request
 
-**Note:** There are also **Asynchronous** methods you can use. Read along to see how to use them.
+**Note:** There are also **Synchronous** methods you can use. Read along to see how to use them.
 
 `.get(**kwargs)`
 
@@ -194,9 +194,9 @@ watch.stop(20) # The Watch will be stopped after 20 seconds
 * the stopping of a watch may take longer or shorter time for the action to kick in. This depends on your System.
 
 
-### Asynchronous Methods
+### Synchronous Methods
 
-The methods are also available in asynchronous flavor. To get a method work synchronously, append "_sync" to the name of the method.
+The asynchronous methods are also available in synchronous flavor. To get a method work synchronously, append "_sync" to the name of the method.
 
 Example:
 
@@ -208,7 +208,7 @@ user = my_firebase.get_sync("/user")
 
 ### Callbacks and Errors
 
-In all the synchronous methods, a **Callback** can be assigned. The callback will be executed once response is received. In the case of `.onChange()` method, the callback will be inserted every time data changes at the point specified. 
+In all the asynchronous methods, a **Callback** can be assigned. The callback will be executed once response is received. In the case of `.onChange()` method, the callback will be inserted every time data changes at the point specified. 
 
 Functions assigned to **error** are executed when an error occurs while executing the action. The following errors may be caught:
 
