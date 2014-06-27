@@ -36,7 +36,7 @@
                             </tr>
                             <tr>
                                 <td>Last Updated</td>
-                                <td>30th May, 2014</td>
+                                <td>28th June, 2014</td>
                             </tr>
                         </table>
                     </section>
@@ -129,15 +129,15 @@ These are the basic methods available to any Firebase
     $python$ new_child = my_firebase.child(point="/child") $end$
     <br>
 
-## Synchronous Methods ##
+## Asynchronous Methods ##
 
-A Firebase instance has different methods that let you transact with it. The methods shown below are **Synchronous**. This means that:
+A Firebase instance has different methods that let you transact with it. The methods shown below are **Asynchronous**. This means that:
     
 * Python won't wait for the response, it will continue executing following lines of code
 * You should NOT assign return value to a variable. Doing this will always assign $$python$$ None $$end$$
 * You will have to use a callback to manipulate returned data from a request
 
-**Note:** There are also **Asynchronous** methods you can use. Read along to see how to use them.
+**Note:** There are also **Synchronous** methods you can use. Read along to see how to use them.
 
 * $$python$$ .get(**kwargs) $$end$$
 
@@ -221,9 +221,9 @@ $end$
 * the stopping of a watch may take longer or shorter time for the action to kick in. This depends on your System.
 
 
-## Asynchronous Methods ##
+## Synchronous Methods ##
 
-The methods are also available in synchronous flavor. To get a method to work synchronously, append "_sync" to the name of the method.
+The asynchronous methods are also available in synchronous flavor. To get a method to work synchronously, append "_sync" to the name of the method.
 
 Example:
 
@@ -235,7 +235,7 @@ $end$
 
 ## Callbacks and Errors ##
 
-In all the synchronous methods, a **Callback** can be assigned. The callback will be executed once response is received. In the case of $$python$$ .onChange() $$end$$ method, the callback will be inserted every time data changes at the point specified. 
+In all the asynchronous methods, a **Callback** can be assigned. The callback will be executed once response is received. In the case of $$python$$ .onChange() $$end$$ method, the callback will be inserted every time data changes at the point specified. 
 
 Functions assigned to **error** are executed when an error occurs while executing the action. The following errors may be caught:
 
