@@ -51,7 +51,8 @@ class Firebase_sync:
        
     # File Reading: This aids in reading a ".json" file from which one (or more) json objects
     # could be passed as Data to Requests
-    def read(self, path):
+    @staticmethod
+    def read(path):
         mine = open(path, 'r')                  # Opening file in Read mode
         data = mine.read()                       # Reading Data in file to a variable
         objs = []                                      # Array to hold Json Objects
@@ -73,6 +74,7 @@ class Firebase_sync:
         
         
     # File Writing: This function is used to write to Files JSON objects
+    @staticmethod
     def write(self, path, data, mode="w"):
         if data[0] == '"' or data[0] == "'":         # Removing Preceding '"'
             data = data[1:]                                 # From 2nd Index to Last

@@ -1,7 +1,7 @@
 # Asynchronous Implementation of the Firebase API
 
 # 'threading' module
-from threading import Thread
+from threading import Thread, Event
 # 'sync' module - holds the 'firebase' class and its methods
 from sync import Firebase_sync
 # 'sleep' function
@@ -14,7 +14,6 @@ class async:
    
    # Constructor for a Request-Callback Thread
     def __init__(self, type, request, **kwargs):
-        self._watch = {}
         callback = kwargs.get("callback", None)   # Getting the 'callback' variable. Defaults to 'None'
         error = kwargs.get("error", None)             # Getting the 'error' variable. Defaults to 'None'
         kwargs.pop("callback", None)                  # Removing the Callback argument
@@ -22,7 +21,10 @@ class async:
         # Creating a Thread for the Request & Callback & Error and Starting it Immediately
         if type == "once": self.request = Thread(target=self.thread, args=(request, kwargs, callback, error)).start()
         # Creating a Thread for the Watch & Callback & Error and starting it Immediately
-        if type == "watch": self.request = Thread(target=self.watch, args=(request, kwargs, callback, error)).start()
+        if type == "watch": 
+            self.__watch = None
+            self.__event = Event()
+            self.request = Thread(target=self.watch, args=(request, kwargs, callback, error)).start()
         
     # Wrapper Function for the Thread
     def thread(self, request, argv, callback, error):
@@ -35,28 +37,34 @@ class async:
 
     # Watch Thread: this will be used to watch for changes
     def watch(self, request, argv, callback, error):
+        fetches = argv.get("fetches", -1)      # How many maximum fetches should we do
+        argv.pop("fetches", None)                    # Removing the fetches parameter
         frequency = argv.get("frequency", 10)   # After how long the thread will check for changes
         argv.pop("frequency", None)                # Removing the frequency parameter
         ignore_error = argv.get("ignore_error", True) # Whether to keep going in case of Error. Default = True
         argv.pop("ignore_error", None)            # Removing the ignore_error parameter
-        self._watch = True                               # Marker to keep the watch going. Enables stopping
+        self.__watch = True                             # Marker to keep the watch going. Enables stopping
         newData = None                                 # Will hold new data as it arrives
         oldData = None                                   # Will hold the previous data as new data arrives
-        while self._watch == True:                 # Loop to continouosly check remote
+        while self.__watch == True:      # Loop to continouosly check remote
             try:
                 newData = request(**argv)              # Making the Request
                 if newData != oldData and callback != None and newData != None:  # Testing for New Data
                     callback(newData)                       # Executing callback; passing the new data to it
                     oldData = newData                      # Now updating the previous data to match the new data
             except Exception, err:
-                if ignore_error != True: self._watch = False # Knowing if we are to stop or keep going
+                if ignore_error != True: self.__watch = False # Knowing if we are to stop or keep going
                 if error != None: error(err)              # Executing Error function If Request failed
+            fetches -= 1                                        # Decrementing the fetches by 1
+            if fetches == 0:
+                self.__event.set()
+                break                                            # Break out of Loop
             sleep(frequency)                                # Sleep (wait) for time specified. Default = 10 seconds
             
     # Stop Watch: This will kill the Watch associated with this Instance
     def stop(self, timeout=0):
-        sleep(timeout)             # Sleep (wait) for the time specified before killing the Watch. Default = 0 seconds
-        self._watch = False     # This will cause the Loop in the watch to stop
+        self.__event.wait(timeout)             # Sleep (wait) for the time specified before killing the Watch. Default = 0 seconds
+        self.__watch = False     # This will cause the Loop in the watch to stop
           
 # Sync Class for Firebase Methods
 class Firebase(Firebase_sync):
