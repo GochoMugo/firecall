@@ -6,10 +6,10 @@ A Python Library for the [Firebase](https://firebaseio.com/) API
 
 |Topic                        | Details                |
 |----------------- |---------------|
-|Version                    | 0.1.0                   |
+|Version                    | 0.1.1                   |
 |Python                     | 2.7                      |
 |Development Status | 3 - Alpha            |
-|Last Updated            | 27th June, 2014    |
+|Last Updated            | 28th June, 2014    |
 
 > The Development Status of this Library warrants me to say that this API will keep growing. That's a good thing, right?
 
