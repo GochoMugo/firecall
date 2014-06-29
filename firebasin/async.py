@@ -53,7 +53,9 @@ class async:
                     callback(newData)                       # Executing callback; passing the new data to it
                     oldData = newData                      # Now updating the previous data to match the new data
             except Exception, err:
-                if ignore_error != True: self.__watch = False # Knowing if we are to stop or keep going
+                if ignore_error != True: 
+                    self.__event.set();                      # Knowing if we are to stop or keep going
+                    break;
                 if error != None: error(err)              # Executing Error function If Request failed
             fetches -= 1                                        # Decrementing the fetches by 1
             if fetches == 0:

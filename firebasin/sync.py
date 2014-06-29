@@ -5,8 +5,8 @@
 import requests
 # 'json' module
 import json
-# 'validurl' function
-from general import valid_url
+# 'time' functions
+from time import time
 
 # 'Firebase_sync' class
 class Firebase_sync:
@@ -15,34 +15,39 @@ class Firebase_sync:
     # Constructor
     def __init__(self, url, auth=None):
         # Ensuring that the URL is Valid
-        self.url = url                     # firebase url
-        self.auth = auth                # firebase credentials
+        self.__url = url                     # firebase url
+        self.__auth = auth                # firebase credentials
+        self.attr = {
+            "time": time(),
+            "url": self.__url,
+            "token": self.__auth
+        }
     
     # Getting Root URL of the Firebase. E.g. if the URL of a firebase is
-    # "https://my_firebase.firebaseio.com/users" then its root is "https://myfirebase.firebaseio.com"
+    # "https://my_firebase.firebaseio.com/users" then its root is "https://my_firebase.firebaseio.com"
     def root(self):
         # Looping till we find '.com'
-        i = self.url.find('.com') + 4   # index after '.com'
-        return self.url[:i]               # Root URL of Firebase
+        i = self.__url.find('.com') + 4   # index after '.com'
+        return self.__url[:i]               # Root URL of Firebase
     
     # Getting name of Firebase. E.g. if a firebase instance points to 
     # "https://my_firebase.firebaseio.com/users" its name would be "users"
     def name(self):
-        i = self.url.rfind('/')     # Getting index of the last '/'
+        i = self.__url.rfind('/')     # Getting index of the last '/'
         # Exception that the Firebase points to the root. E.g. "https://my_firebase.firebaseio.com/" 
         # We can figure this out but by looking for ":" 2 indices before the "/"
-        if self.url[i-2] == ':':
+        if self.__url[i-2] == ':':
             return "/"              # "/" as root :-)
-        return self.url[i+1:]    # return the name
+        return self.__url[i+1:]    # return the name
     
     # Converting the URL of the firebase to a string and returning it
     def toString(self):
-        return str(self.url)    # Converting to String
+        return str(self.__url)    # Converting to String
     
     # Url correction: This involves Concatenation with required fields in the URL as per the
     # REST API. E.g. "https://my_firebase.firebaseio.com/users" + "/john_doe" + "?format=export"
     def url_correct(self, point, auth=None, export=None):
-        newUrl = self.url + point + '.json' # Basic url
+        newUrl = self.__url + point + '.json' # Basic url
         if auth != None:                           # Checking if auth is required
             newUrl += ("?auth=" + auth)     # Appending Credential
         if export != None:                        # Checking if it is an Export
@@ -114,7 +119,7 @@ class Firebase_sync:
         self.amust(("point",), kwargs) # Ensuring Point is Provided
         print "Fetching data"
         # Sending the 'GET' request
-        response = requests.get(self.url_correct(kwargs["point"], kwargs.get("auth", self.auth)))
+        response = requests.get(self.__url_correct(kwargs["point"], kwargs.get("auth", self.__auth)))
         self.catch_error(response)
         return response.content
         
@@ -123,7 +128,7 @@ class Firebase_sync:
         self.amust(("point","data"), kwargs) # Ensuring Point and Data is Provided
         print "Putting data"
         # Sending the 'PUT' request
-        response = requests.put(self.url_correct(kwargs["point"], kwargs.get("auth", self.auth)), data=json.dumps(kwargs["data"]))
+        response = requests.put(self.__url_correct(kwargs["point"], kwargs.get("auth", self.__auth)), data=json.dumps(kwargs["data"]))
         self.catch_error(response)
         return response.content
     
@@ -133,7 +138,7 @@ class Firebase_sync:
         self.amust(("point", "data"), kwargs) # Ensuring Point and Data is Provided
         print "Posting data"
         # Sending the 'POST' request
-        response = requests.post(self.url_correct(kwargs["point"], kwargs.get("auth", self.auth)), data=json.dumps(kwargs["data"]))
+        response = requests.post(self.__url_correct(kwargs["point"], kwargs.get("auth", self.__auth)), data=json.dumps(kwargs["data"]))
         self.catch_error(response)
         return response.content
 
@@ -142,7 +147,7 @@ class Firebase_sync:
         self.amust(("point", "data"), kwargs) # Ensuring Point and Data is Provided
         print "Updating data"
         # Sending the 'PATCH' request
-        response = requests.patch(self.url_correct(kwargs["point"], kwargs.get("auth", self.auth)), data=json.dumps(kwargs["data"]))
+        response = requests.patch(self.__url_correct(kwargs["point"], kwargs.get("auth", self.__auth)), data=json.dumps(kwargs["data"]))
         self.catch_error(response)
         return response.content
 
@@ -151,7 +156,7 @@ class Firebase_sync:
         self.amust(("point",), kwargs) # Ensuring Point is Provided
         print "Deleting Data "
         # Sending the 'DELETE' request
-        response = requests.delete(self.url_correct(kwargs["point"], kwargs.get("auth", self.auth)))
+        response = requests.delete(self.__url_correct(kwargs["point"], kwargs.get("auth", self.__auth)))
         self.catch_error(response)
         return response.content
         
@@ -160,7 +165,7 @@ class Firebase_sync:
     def export_sync(self, **kwargs):
         self.amust(("point",), kwargs) # Ensuring Point is Provided
         print "Exporting Data"
-        response = requests.get(self.url_correct(kwargs["point"], kwargs.get("auth", self.auth), True));
+        response = requests.get(self.__url_correct(kwargs["point"], kwargs.get("auth", self.__auth), True));
         self.catch_error(response)
         # If path is provided
         if kwargs.get("auth", None) != None:
