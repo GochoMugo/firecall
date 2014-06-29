@@ -1,1 +1,1 @@
-from async import Firebase     # importing async
+from .async import Firebase     # importing async

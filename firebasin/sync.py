@@ -102,13 +102,11 @@ class Firebase_sync:
     def amust(self, args, argv):
         for arg in args:                                                            # Looping through the Tuple with the argument names
             if str(arg) not in argv:                                             # The name is not used as a keyword in the argv dict
-                print "ERROR: '" + str(arg)                                    # Showing an Error message
                 raise KeyError("ArgMissing: " + str(arg) + " not passed") # Raising Exception and stopping Execution
             
      # Catching error responses
     def catch_error(self, response):
         status = response.status_code               # Status Code
-        print status
         if  status == 401 or status == 403:         # Security Rules Violation
             raise EnvironmentError("Forbidden")
         elif status == 417 or status == 404:       # Firebase NOT Found
@@ -117,18 +115,16 @@ class Firebase_sync:
      # GET: getting data from the Firebase.
     def get_sync(self, **kwargs):
         self.amust(("point",), kwargs) # Ensuring Point is Provided
-        print "Fetching data"
         # Sending the 'GET' request
-        response = requests.get(self.__url_correct(kwargs["point"], kwargs.get("auth", self.__auth)))
+        response = requests.get(self.url_correct(kwargs["point"], kwargs.get("auth", self.__auth)))
         self.catch_error(response)
         return response.content
         
     # PUT: putting 'data' at a location in the Firebase
     def put_sync(self, **kwargs):
         self.amust(("point","data"), kwargs) # Ensuring Point and Data is Provided
-        print "Putting data"
         # Sending the 'PUT' request
-        response = requests.put(self.__url_correct(kwargs["point"], kwargs.get("auth", self.__auth)), data=json.dumps(kwargs["data"]))
+        response = requests.put(self.url_correct(kwargs["point"], kwargs.get("auth", self.__auth)), data=json.dumps(kwargs["data"]))
         self.catch_error(response)
         return response.content
     
@@ -136,27 +132,24 @@ class Firebase_sync:
     # Note: Firebase will give it a randomized "key" and the data will be the "value". Thus a key-value pair
     def post_sync(self, **kwargs):
         self.amust(("point", "data"), kwargs) # Ensuring Point and Data is Provided
-        print "Posting data"
         # Sending the 'POST' request
-        response = requests.post(self.__url_correct(kwargs["point"], kwargs.get("auth", self.__auth)), data=json.dumps(kwargs["data"]))
+        response = requests.post(self.url_correct(kwargs["point"], kwargs.get("auth", self.__auth)), data=json.dumps(kwargs["data"]))
         self.catch_error(response)
         return response.content
 
     # UPDATE
     def update_sync(self, **kwargs):
         self.amust(("point", "data"), kwargs) # Ensuring Point and Data is Provided
-        print "Updating data"
         # Sending the 'PATCH' request
-        response = requests.patch(self.__url_correct(kwargs["point"], kwargs.get("auth", self.__auth)), data=json.dumps(kwargs["data"]))
+        response = requests.patch(self.url_correct(kwargs["point"], kwargs.get("auth", self.__auth)), data=json.dumps(kwargs["data"]))
         self.catch_error(response)
         return response.content
 
     # DELETE: removes data at the location requested
     def delete_sync(self, **kwargs):
         self.amust(("point",), kwargs) # Ensuring Point is Provided
-        print "Deleting Data "
         # Sending the 'DELETE' request
-        response = requests.delete(self.__url_correct(kwargs["point"], kwargs.get("auth", self.__auth)))
+        response = requests.delete(self.url_correct(kwargs["point"], kwargs.get("auth", self.__auth)))
         self.catch_error(response)
         return response.content
         
@@ -164,8 +157,7 @@ class Firebase_sync:
     # provided in the 'path' parameter. If the path is NOT given, the data retrieved is simply returned. NO file write.
     def export_sync(self, **kwargs):
         self.amust(("point",), kwargs) # Ensuring Point is Provided
-        print "Exporting Data"
-        response = requests.get(self.__url_correct(kwargs["point"], kwargs.get("auth", self.__auth), True));
+        response = requests.get(self.url_correct(kwargs["point"], kwargs.get("auth", self.__auth), True));
         self.catch_error(response)
         # If path is provided
         if kwargs.get("auth", None) != None:

@@ -3,10 +3,10 @@
 # 'threading' module
 from threading import Thread, Event
 # 'sync' module - holds the 'firebase' class and its methods
-from sync import Firebase_sync
+from .sync import Firebase_sync
 # 'sleep' function
 from time import sleep
-from general import valid_url
+from .general import valid_url
 
 # Async Class: This class implements threading of requests made and the particular execution of followup functions
 class async:
@@ -32,7 +32,7 @@ class async:
             try:                                                   # trying to execute the query
                 response = request(**argv)            # Executing Request
                 if callback != None and response != None: callback(response)  # Executing Callback If Data is received
-            except Exception, err:                     # Query failed or Error Occurred
+            except Exception as err:                 # Query failed or Error Occurred
                 if error != None: error(err)               # Executing Error If Request failed
 
     # Watch Thread: this will be used to watch for changes
@@ -52,7 +52,7 @@ class async:
                 if newData != oldData and callback != None and newData != None:  # Testing for New Data
                     callback(newData)                       # Executing callback; passing the new data to it
                     oldData = newData                      # Now updating the previous data to match the new data
-            except Exception, err:
+            except Exception as err:
                 if ignore_error != True: 
                     self.__event.set();                      # Knowing if we are to stop or keep going
                     break;
@@ -76,7 +76,7 @@ class Firebase(Firebase_sync):
         try:
             url = valid_url(url)
             Firebase_sync.__init__(self, url, kwargs.get("auth", None))  # Instantiating the firebase-sync class
-        except Exception, err:
+        except Exception as err:
             error = kwargs.get("error", None)
             if error != None: error(err)
    
