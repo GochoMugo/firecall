@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="chrome=1">
-        <title>firebasin | v0.1.0</title>
+        <title>firebasin | v0.1.1</title>
         <link rel="stylesheet" href="css/styles.css">
         <link rel="stylesheet" href="css/pygment_trac.css">
         <link rel="stylesheet" href="css/prism.css">
@@ -24,11 +24,11 @@
                         <table>
                             <tr>
                                 <td>Version</td>
-                                <td>0.1.0</td>
+                                <td>0.1.1</td>
                             </tr>
                             <tr>
                                 <td>Python</td>
-                                <td>2.7</td>
+                                <td>2.7, 3.2</td>
                             </tr>
                             <tr>
                                 <td>Development Status</td>
@@ -36,7 +36,7 @@
                             </tr>
                             <tr>
                                 <td>Last Updated</td>
-                                <td>28th June, 2014</td>
+                                <td>24th July, 2014</td>
                             </tr>
                         </table>
                     </section>
@@ -60,6 +60,10 @@ $bash$ $ sudo pip install requests $end$
 Now comes the goodness. To install **firebasin**, just:
 
 $bash$ $ sudo pip install firebasin $end$
+
+If you already have **firebasin** installed, you could **upgrade** by:
+
+$bash$ $ sudo pip install --upgrade firebasin $end$
 
 # Getting Started #
 
@@ -103,7 +107,18 @@ These are the basic methods available to any Firebase
     * Returns a String
 
     Example:
-    $python$ print my_firebase.name() $end$
+    $python$ print(my_firebase.name()) $end$
+    <br>
+    
+*   $$python$$ .attr() $$end$$
+    
+    Returns a tuple containing some details of the Firebase.
+
+    * Requires No arguments
+    * Returns a tuple e.g (time\_of\_creation, url\_of\_firebase, auth\_token)
+
+    Example:
+    $python$ print(my_firebase.attr()) $end$
     <br>
 
 * $$python$$ .parent()  $$end$$
@@ -154,7 +169,7 @@ A Firebase instance has different methods that let you transact with it. The met
 $python$
 # Callback function definition
 def hello(data):
-    print data
+    print(data)
     
 # Making a 'GET' request
 my_firebase.get(point="/child", auth="Ja2f29f4Gsk2d3bhxW2d8vDlK", callback=hello)
@@ -193,6 +208,7 @@ $end$
         * path="UNIX\_path\_to\_file\_to\_write\_to" (Optional)
         * callback=name\_of\_a\_function (Optional)
         * error=name\_of\_a\_function (Optional)
+        * mode=mode\_of\_file\_access (Optional). This can _w_ (write) or _a_ (append) 
     * Returns `None`. Data you just exported is passed to the callback function, if specified.
 
     **Note:** if the $$python$$ path $$end$$ argument is not given, this will behave similar to $$python$$ .get(**kwargs) $$end$$
@@ -207,6 +223,8 @@ $end$
         * callback=name\_of\_a\_function (Optional)
         * error=name\_of\_a\_function (Optional)
         * ignore_error=True (Optional) - Whether to keep watching incase of an error or make it Stop
+        * frequency=10 (Optional) - The number of seconds between checks on the Firebase
+        * fetches=-1 (Optional) - The number of times to look at the Firebase before automatically stopping. It is a _positive_ integer. Giving a negative integer makes it be ignored. 
     * Returns an Object representing the Watch. This object has one method:
         *   _.stop(number_of_seconds)_ - Passing an integer or float will cause the watch to be stopped after the specified number of seconds. If no number is passed, the watch will be stopped as soon as Possible.
 
@@ -265,9 +283,7 @@ Incase you encounter a bug, even if you could fix it yourself, please share with
 
 <center>**Conquer the World with Python**</center>
 
-
-
-[Requests]:http://docs.python-requests.org/ "Site for Requests Library"
+[Requests]:http://docs.python-requests.org/ "Home for Requests Library"
 </section>
             <section id="content"></section>
         
