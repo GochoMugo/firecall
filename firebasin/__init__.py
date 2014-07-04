@@ -1,1 +1,5 @@
-from async import Firebase     # importing async
+'''
+firebasin is a Python implementation of the Firebase API
+'''
+
+from .async import Firebase     # importing async

@@ -1,12 +1,14 @@
-# Basic Building Blocks of the Firebase API
-# This Methods are all 'synchronous'
+'''
+Synchronous implementation of the Firebase API. This provides the basic 
+building blocks.
+'''
 
 # 'request' module
 import requests
 # 'json' module
 import json
-# 'validurl' function
-from general import valid_url
+# 'time' functions
+from time import time
 
 # 'Firebase_sync' class
 class Firebase_sync:
@@ -15,34 +17,43 @@ class Firebase_sync:
     # Constructor
     def __init__(self, url, auth=None):
         # Ensuring that the URL is Valid
-        self.url = url                     # firebase url
-        self.auth = auth                # firebase credentials
+        self.__url = url                     # firebase url
+        self.__auth = auth                # firebase credentials
+        self.__attr = {
+            "time": time(),
+            "url": self.__url,
+            "token": self.__auth
+        }
+        
+    # Returns a Dictionary with the attributes of the Firebase
+    def attr(self):
+        return self.__attr['time'], self.__attr['url'],  self.__attr['token']
     
     # Getting Root URL of the Firebase. E.g. if the URL of a firebase is
-    # "https://my_firebase.firebaseio.com/users" then its root is "https://myfirebase.firebaseio.com"
+    # "https://my_firebase.firebaseio.com/users" then its root is "https://my_firebase.firebaseio.com"
     def root(self):
         # Looping till we find '.com'
-        i = self.url.find('.com') + 4   # index after '.com'
-        return self.url[:i]               # Root URL of Firebase
+        i = self.__url.find('.com') + 4   # index after '.com'
+        return self.__url[:i]               # Root URL of Firebase
     
     # Getting name of Firebase. E.g. if a firebase instance points to 
     # "https://my_firebase.firebaseio.com/users" its name would be "users"
     def name(self):
-        i = self.url.rfind('/')     # Getting index of the last '/'
+        i = self.__url.rfind('/')     # Getting index of the last '/'
         # Exception that the Firebase points to the root. E.g. "https://my_firebase.firebaseio.com/" 
         # We can figure this out but by looking for ":" 2 indices before the "/"
-        if self.url[i-2] == ':':
+        if self.__url[i-2] == ':':
             return "/"              # "/" as root :-)
-        return self.url[i+1:]    # return the name
+        return self.__url[i+1:]    # return the name
     
     # Converting the URL of the firebase to a string and returning it
     def toString(self):
-        return str(self.url)    # Converting to String
+        return str(self.__url)    # Converting to String
     
     # Url correction: This involves Concatenation with required fields in the URL as per the
     # REST API. E.g. "https://my_firebase.firebaseio.com/users" + "/john_doe" + "?format=export"
     def url_correct(self, point, auth=None, export=None):
-        newUrl = self.url + point + '.json' # Basic url
+        newUrl = self.__url + point + '.json' # Basic url
         if auth != None:                           # Checking if auth is required
             newUrl += ("?auth=" + auth)     # Appending Credential
         if export != None:                        # Checking if it is an Export
@@ -52,7 +63,7 @@ class Firebase_sync:
     # File Reading: This aids in reading a ".json" file from which one (or more) json objects
     # could be passed as Data to Requests
     @staticmethod
-    def read(path):
+    def __read(path):
         mine = open(path, 'r')                  # Opening file in Read mode
         data = mine.read()                       # Reading Data in file to a variable
         objs = []                                      # Array to hold Json Objects
@@ -75,35 +86,29 @@ class Firebase_sync:
         
     # File Writing: This function is used to write to Files JSON objects
     @staticmethod
-    def write(self, path, data, mode="w"):
+    def __write(path, data, mode="w"):
         if data[0] == '"' or data[0] == "'":         # Removing Preceding '"'
             data = data[1:]                                 # From 2nd Index to Last
         last = len(data) -1                                # Last Index
         if data[last] == '"' or data[last] == "'": # Removing Trailing '"'
             data = data[:last]                             # From Beginning to Second Last Index
         data =  str(data).replace("\\", "")          # Backslash Removal
-        out = open(path, mode)                       # Opening/Creating file. Default to Write('overwrite') mode
+        out = open(path, mode)                       # Opening/Creating file. Default: 'overwrite' mode
         out.write(str(data))                              # Writing Data
         out.close()                                           # Closing file
         return data                                         # Returning the Data just for convenience
-        
-    # Appending to File: Uses the 'write()' function above
-    def append(self, path, data): return self.write(path, data, "a")
-    # Overwriting a File: Uses the 'write()' function above
-    def overwrite(self, path, data): return self.write(path, data, "w")    
     
     # Requiring Arguments: Some functions may not work without some arguments being present
     # the name(s) of the arguments are passed in a tuple along with the arguments recieved in the call
     def amust(self, args, argv):
         for arg in args:                                                            # Looping through the Tuple with the argument names
             if str(arg) not in argv:                                             # The name is not used as a keyword in the argv dict
-                print "ERROR: '" + str(arg)                                    # Showing an Error message
                 raise KeyError("ArgMissing: " + str(arg) + " not passed") # Raising Exception and stopping Execution
             
      # Catching error responses
-    def catch_error(self, response):
+    @staticmethod
+    def catch_error(response):
         status = response.status_code               # Status Code
-        print status
         if  status == 401 or status == 403:         # Security Rules Violation
             raise EnvironmentError("Forbidden")
         elif status == 417 or status == 404:       # Firebase NOT Found
@@ -112,18 +117,16 @@ class Firebase_sync:
      # GET: getting data from the Firebase.
     def get_sync(self, **kwargs):
         self.amust(("point",), kwargs) # Ensuring Point is Provided
-        print "Fetching data"
         # Sending the 'GET' request
-        response = requests.get(self.url_correct(kwargs["point"], kwargs.get("auth", self.auth)))
+        response = requests.get(self.url_correct(kwargs["point"], kwargs.get("auth", self.__auth)))
         self.catch_error(response)
         return response.content
         
     # PUT: putting 'data' at a location in the Firebase
     def put_sync(self, **kwargs):
         self.amust(("point","data"), kwargs) # Ensuring Point and Data is Provided
-        print "Putting data"
         # Sending the 'PUT' request
-        response = requests.put(self.url_correct(kwargs["point"], kwargs.get("auth", self.auth)), data=json.dumps(kwargs["data"]))
+        response = requests.put(self.url_correct(kwargs["point"], kwargs.get("auth", self.__auth)), data=json.dumps(kwargs["data"]))
         self.catch_error(response)
         return response.content
     
@@ -131,27 +134,24 @@ class Firebase_sync:
     # Note: Firebase will give it a randomized "key" and the data will be the "value". Thus a key-value pair
     def post_sync(self, **kwargs):
         self.amust(("point", "data"), kwargs) # Ensuring Point and Data is Provided
-        print "Posting data"
         # Sending the 'POST' request
-        response = requests.post(self.url_correct(kwargs["point"], kwargs.get("auth", self.auth)), data=json.dumps(kwargs["data"]))
+        response = requests.post(self.url_correct(kwargs["point"], kwargs.get("auth", self.__auth)), data=json.dumps(kwargs["data"]))
         self.catch_error(response)
         return response.content
 
     # UPDATE
     def update_sync(self, **kwargs):
         self.amust(("point", "data"), kwargs) # Ensuring Point and Data is Provided
-        print "Updating data"
         # Sending the 'PATCH' request
-        response = requests.patch(self.url_correct(kwargs["point"], kwargs.get("auth", self.auth)), data=json.dumps(kwargs["data"]))
+        response = requests.patch(self.url_correct(kwargs["point"], kwargs.get("auth", self.__auth)), data=json.dumps(kwargs["data"]))
         self.catch_error(response)
         return response.content
 
     # DELETE: removes data at the location requested
     def delete_sync(self, **kwargs):
         self.amust(("point",), kwargs) # Ensuring Point is Provided
-        print "Deleting Data "
         # Sending the 'DELETE' request
-        response = requests.delete(self.url_correct(kwargs["point"], kwargs.get("auth", self.auth)))
+        response = requests.delete(self.url_correct(kwargs["point"], kwargs.get("auth", self.__auth)))
         self.catch_error(response)
         return response.content
         
@@ -159,12 +159,12 @@ class Firebase_sync:
     # provided in the 'path' parameter. If the path is NOT given, the data retrieved is simply returned. NO file write.
     def export_sync(self, **kwargs):
         self.amust(("point",), kwargs) # Ensuring Point is Provided
-        print "Exporting Data"
-        response = requests.get(self.url_correct(kwargs["point"], kwargs.get("auth", self.auth), True));
+        response = requests.get(self.url_correct(kwargs["point"], kwargs.get("auth", self.__auth), True));
         self.catch_error(response)
         # If path is provided
-        if kwargs.get("auth", None) != None:
-            self.write(kwargs["path"], response.content)
+        path = kwargs.get("path", None) 
+        if path != None:
+            self.__write(path, response.content, kwargs.get("mode", "w"))
         # Returning response 
         return response.content
 

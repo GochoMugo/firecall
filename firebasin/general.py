@@ -1,4 +1,7 @@
-# General Methods
+'''
+General Methods that may be required all over the Library and are not specific 
+to a Firebase
+'''
 
 # regular expression module
 import re
