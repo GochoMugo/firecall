@@ -6,6 +6,8 @@ View this documentation  [here](https://gochomugo.github.io/firebasin/ "Document
 
 ## Quick Stats
 
+[![Build Status](https://travis-ci.org/GochoMugo/firebasin.svg?branch=master)](https://travis-ci.org/GochoMugo/firebasin)
+
 |Topic                        | Details                |
 |----------------- |---------------|
 |Version                    | 0.1.1                   |
