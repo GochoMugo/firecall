@@ -19,15 +19,15 @@ class async:
         kwargs.pop("callback", None)                  # Removing the Callback argument
         kwargs.pop("error", None)                       # Removing the Callback argument
         # Creating a Thread for the Request & Callback & Error and Starting it Immediately
-        if type == "once": self.request = Thread(target=self.thread, args=(request, kwargs, callback, error)).start()
+        if type == "once": self.request = Thread(target=self.__thread, args=(request, kwargs, callback, error)).start()
         # Creating a Thread for the Watch & Callback & Error and starting it Immediately
         if type == "watch": 
             self.__watch = None
             self.__event = Event()
-            self.request = Thread(target=self.watch, args=(request, kwargs, callback, error)).start()
+            self.__request = Thread(target=self.watch, args=(request, kwargs, callback, error)).start()
         
     # Wrapper Function for the Thread
-    def thread(self, request, argv, callback, error):
+    def __thread(self, request, argv, callback, error):
             response = None                               # Will hold the response
             try:                                                   # trying to execute the query
                 response = request(**argv)            # Executing Request
@@ -46,7 +46,7 @@ class async:
         self.__watch = True                             # Marker to keep the watch going. Enables stopping
         newData = None                                 # Will hold new data as it arrives
         oldData = None                                   # Will hold the previous data as new data arrives
-        while self.__watch == True:      # Loop to continouosly check remote
+        while self.__watch == True and fetches != 0:      # Loop to continouosly check remote
             try:
                 newData = request(**argv)              # Making the Request
                 if newData != oldData and callback != None and newData != None:  # Testing for New Data
@@ -54,19 +54,23 @@ class async:
                     oldData = newData                      # Now updating the previous data to match the new data
             except Exception as err:
                 if ignore_error != True: 
-                    self.__event.set();                      # Knowing if we are to stop or keep going
+                    self.__event.set();
                     break;
                 if error != None: error(err)              # Executing Error function If Request failed
             fetches -= 1                                        # Decrementing the fetches by 1
             if fetches == 0:
-                self.__event.set()
+                self.__event.set();                          # Setting the event
                 break                                            # Break out of Loop
             sleep(frequency)                                # Sleep (wait) for time specified. Default = 10 seconds
             
     # Stop Watch: This will kill the Watch associated with this Instance
     def stop(self, timeout=0):
-        self.__event.wait(timeout)             # Sleep (wait) for the time specified before killing the Watch. Default = 0 seconds
-        self.__watch = False     # This will cause the Loop in the watch to stop
+        self.stopwatch = Thread(target=self.__stopper, args=(timeout,)).start()
+        
+    # The Stopper
+    def __stopper(self, timeout):
+        self.__event.wait(timeout) # wait for the time specified before killing the Watch. Default = 0s
+        self.__watch = False  # This will cause the Loop in the watch to stop
           
 # Sync Class for Firebase Methods
 class Firebase(Firebase_sync):
@@ -118,4 +122,3 @@ class Firebase(Firebase_sync):
     # ON
     def onChange(self, **kwargs):
         return async("watch", self.get_sync, **kwargs) # There's need to return the Instance to allow stopping it
-    

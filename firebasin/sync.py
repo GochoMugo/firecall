@@ -17,11 +17,15 @@ class Firebase_sync:
         # Ensuring that the URL is Valid
         self.__url = url                     # firebase url
         self.__auth = auth                # firebase credentials
-        self.attr = {
+        self.__attr = {
             "time": time(),
             "url": self.__url,
             "token": self.__auth
         }
+        
+    # Returns a Dictionary with the attributes of the Firebase
+    def attr(self):
+        return self.__attr['time'], self.__attr['url'],  self.__attr['token']
     
     # Getting Root URL of the Firebase. E.g. if the URL of a firebase is
     # "https://my_firebase.firebaseio.com/users" then its root is "https://my_firebase.firebaseio.com"
@@ -57,7 +61,7 @@ class Firebase_sync:
     # File Reading: This aids in reading a ".json" file from which one (or more) json objects
     # could be passed as Data to Requests
     @staticmethod
-    def read(path):
+    def __read(path):
         mine = open(path, 'r')                  # Opening file in Read mode
         data = mine.read()                       # Reading Data in file to a variable
         objs = []                                      # Array to hold Json Objects
@@ -80,22 +84,18 @@ class Firebase_sync:
         
     # File Writing: This function is used to write to Files JSON objects
     @staticmethod
-    def write(self, path, data, mode="w"):
+    def __write(path, data, mode="w"):
         if data[0] == '"' or data[0] == "'":         # Removing Preceding '"'
             data = data[1:]                                 # From 2nd Index to Last
         last = len(data) -1                                # Last Index
         if data[last] == '"' or data[last] == "'": # Removing Trailing '"'
             data = data[:last]                             # From Beginning to Second Last Index
         data =  str(data).replace("\\", "")          # Backslash Removal
-        out = open(path, mode)                       # Opening/Creating file. Default to Write('overwrite') mode
+        print('opening file with path ', path)
+        out = open(path, mode)                       # Opening/Creating file. Default: 'overwrite' mode
         out.write(str(data))                              # Writing Data
         out.close()                                           # Closing file
         return data                                         # Returning the Data just for convenience
-        
-    # Appending to File: Uses the 'write()' function above
-    def append(self, path, data): return self.write(path, data, "a")
-    # Overwriting a File: Uses the 'write()' function above
-    def overwrite(self, path, data): return self.write(path, data, "w")    
     
     # Requiring Arguments: Some functions may not work without some arguments being present
     # the name(s) of the arguments are passed in a tuple along with the arguments recieved in the call
@@ -105,7 +105,8 @@ class Firebase_sync:
                 raise KeyError("ArgMissing: " + str(arg) + " not passed") # Raising Exception and stopping Execution
             
      # Catching error responses
-    def catch_error(self, response):
+    @staticmethod
+    def catch_error(response):
         status = response.status_code               # Status Code
         if  status == 401 or status == 403:         # Security Rules Violation
             raise EnvironmentError("Forbidden")
@@ -160,8 +161,9 @@ class Firebase_sync:
         response = requests.get(self.url_correct(kwargs["point"], kwargs.get("auth", self.__auth), True));
         self.catch_error(response)
         # If path is provided
-        if kwargs.get("auth", None) != None:
-            self.write(kwargs["path"], response.content)
+        path = kwargs.get("path", None) 
+        if path != None:
+            self.__write(path, response.content, kwargs.get("mode", "w"))
         # Returning response 
         return response.content
 
