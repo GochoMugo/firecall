@@ -1,3 +1,11 @@
+----------Version 0.1.1 -----------
+[04-07-2014]
+    + **.export()** method requires the *path* and *mode*
+    + **.onChange()** has a new parameters: 
+        * *fetches* - the number of the fetches the watch should do before stopping
+        * *frequency* - number of seconds before checking for chenges in the Firebase point 
+    + **.attr()** returns a tuple e.g. (time_of_creation, url_of_firebase, authentication_token)
+
 ---------- Version 0.1.0 ----------
 [29-05-2014]    +   '.onChange()' method and its helper function '.stop()' added. 
                                 The '.onChange()' on a Firebase instance creates a Watcher that watches a  location in Firebase for changes.

@@ -1,4 +1,7 @@
-# Asynchronous Implementation of the Firebase API
+'''
+Asynchronous Implementation of the Firebase API. This is built on the 
+Synchronous implementation (sync.py)
+'''
 
 # 'threading' module
 from threading import Thread, Event
@@ -10,7 +13,7 @@ from .general import valid_url
 
 # Async Class: This class implements threading of requests made and the particular execution of followup functions
 class async:
-    'Class for Aynchronous calls to the Firebase API'
+    'Class for Thread creation fro aynchronous calls to a Firebase'
    
    # Constructor for a Request-Callback Thread
     def __init__(self, type, request, **kwargs):
@@ -74,6 +77,7 @@ class async:
           
 # Sync Class for Firebase Methods
 class Firebase(Firebase_sync):
+    'Firebase class. Contains methods to be used by the programmer'
 
     # Constructor
     def __init__(self, url, **kwargs):

@@ -4,7 +4,7 @@ from distutils.core import setup
 setup(
     name = "firebasin",
     packages = ["firebasin"],
-    version = "0.2.0",
+    version = "0.1.1",
     author = "Gocho Mugo I",
     author_email = "gochomugo.developer@gmail.com",
     url = "https://gochomugo.github.io/firebasin/",

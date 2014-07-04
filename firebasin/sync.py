@@ -1,5 +1,7 @@
-# Basic Building Blocks of the Firebase API
-# This Methods are all 'synchronous'
+'''
+Synchronous implementation of the Firebase API. This provides the basic 
+building blocks.
+'''
 
 # 'request' module
 import requests
@@ -91,7 +93,6 @@ class Firebase_sync:
         if data[last] == '"' or data[last] == "'": # Removing Trailing '"'
             data = data[:last]                             # From Beginning to Second Last Index
         data =  str(data).replace("\\", "")          # Backslash Removal
-        print('opening file with path ', path)
         out = open(path, mode)                       # Opening/Creating file. Default: 'overwrite' mode
         out.write(str(data))                              # Writing Data
         out.close()                                           # Closing file

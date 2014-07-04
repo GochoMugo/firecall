@@ -1,15 +1,17 @@
 # Firebasin
 
-A Python Library for the [Firebase](https://firebaseio.com/) API
+A Python Library for the [Firebase](https://firebaseio.com/) API.
+
+View this documentation  [here](https://gochomugo.github.io/firebasin/ "Documentation on firebasin")
 
 ## Quick Stats
 
 |Topic                        | Details                |
 |----------------- |---------------|
 |Version                    | 0.1.1                   |
-|Python                     | 2.7                      |
+|Python                     | 2.7, 3.2               |
 |Development Status | 3 - Alpha            |
-|Last Updated            | 28th June, 2014    |
+|Last Updated            | 4th July, 2014    |
 
 > The Development Status of this Library warrants me to say that this API will keep growing. That's a good thing, right?
 
@@ -26,6 +28,10 @@ This library depends on the `requests` library. If you have **NOT** installed th
 To Install this library into your machine:
 
 `sudo pip install firebasin`
+
+If you already have firebasin installed, you could **upgrade** by:
+
+`sudo pip install --upgrade firebasin`
 
 ## Getting Started
 
@@ -60,7 +66,7 @@ Get a Firebase reference to the root of the Firebase.
 Example:
 
 ```python
-print my_firebase.root()
+print(my_firebase.root())
 ```
 
 `.name()`
@@ -73,8 +79,20 @@ Get the last token of this location's URL.
 Example:
 
 ```python
-print my_firebase.name()
+print(my_firebase.name())
 ```
+
+`.attr()`
+
+Returns a tuple containing some details of the Firebase.
+
+* Requires No arguments
+* Returns a tuple e.g (time_of_creation, url_of_firebase, auth_token)
+
+```python
+print(my_firebase.attr())
+```
+
 `.parent()`
 
 Get a Firebase instance with the parent Location as its URL
@@ -128,7 +146,7 @@ Example:
 ```python
 # Callback function definition
 def hello(data):
-    print data
+    print(data)
     
 # Making a 'GET' request
 my_firebase.get(point="/child", auth="Ja2f29f4Gsk2d3bhxW2d8vDlK", callback=hello)
@@ -181,10 +199,15 @@ Poll for changes at a Location on your Firebase.
     * callback=name_of_a_function (Optional)
     * error=name_of_a_function (Optional)
     * ignore_error=True (Optional) - Whether to keep watching incase of an error or make it Stop
+    * frequency=10 (Optional) - The number of seconds between checks on the Firebase
+    * fetches=-1 (Optional) - The number of times to look at the Firebase before automatically stopping. It is a _positive_ integer. Giving a negative integer makes it be ignored. 
 * Returns an Object representing the Watch. This object has one method:
-    *   _.stop(number_of_seconds)_ - Passing an integer or float will cause the watch to be stopped after the specified number of seconds. If no number is passed, the watch will be stopped as soon as Possible.
+    *   _.stop(number_of_seconds)_ - Passing an integer will cause the watch to be stopped after the specified number of seconds. If no number is passed, the watch will be stopped as soon as Possible.
 
 ```python
+def keep_printing(data):
+    print(data)
+
 watch = my_firebase.onChange(point="/watch_here", callback=keep_printing) # Creates a watch Object
 watch.stop(20) # The Watch will be stopped after 20 seconds
 ```
