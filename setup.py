@@ -1,18 +1,33 @@
-# Importing setup() function
+'''
+firebasin
+=======
+A Python Implementation of the
+`Firebase REST API <https://www.firebase.com/docs/rest-api.html>`_.
+
+A complete and updated documentation of this Module may be found at
+`firebasin's github project page
+ <https://gochomugo.github.io/GochoMugo/firebasin>`_.
+
+Source code is licensed under the MIT License.
+ Copyright (c) 2014 GOCHO MUGO
+'''
+
 from distutils.core import setup
-# Calling the setup() function
+
+
 setup(
-    name = "firebasin",
-    packages = ["firebasin"],
-    version = "0.1.1",
-    author = "Gocho Mugo I",
-    author_email = "gochomugo.developer@gmail.com",
-    url = "https://gochomugo.github.io/firebasin/",
-    download_url = "https://github.com/GochoMugo/firebasin/zipball/master",
-    description = "Python library for Firebase API",
-    keywords = ["firebase", "firebasin", "REST", "API"],
-    long_description = "A Python Implementation of the Firebase API. http://firebase.com/",
-    classifiers = [
+    name="firebasin",
+    packages=["firebasin"],
+    version="0.1.2",
+    author="Gocho Mugo I",
+    author_email="gochomugo.developer@gmail.com",
+    url="https://gochomugo.github.io/firebasin/",
+    download_url="https://github.com/GochoMugo/firebasin/zipball/master",
+    description="Python library for Firebase API",
+    keywords=["firebase", "firebasin", "REST", "API"],
+    long_description=__doc__,
+    license="MIT",
+    classifiers=[
         "Development Status :: 3 - Alpha",
         "Environment :: Web Environment",
         "Intended Audience :: Developers",
@@ -25,5 +40,6 @@ setup(
         "Programming Language :: Python :: 3.2",
         "Topic :: Internet",
         "Topic :: Software Development :: Libraries :: Python Modules"
-    ]
+    ],
+    install_requires=["requests"]
 )

@@ -4,6 +4,6 @@ python:
   - "3.2"
 # command to install dependencies
 install:
-  - "pip install requests"
+  - "pip install -r dependencies.txt --use-mirrors"
 # command to run tests
 script: nosetests

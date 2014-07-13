@@ -6,14 +6,14 @@ View this documentation  [here](https://gochomugo.github.io/firebasin/ "Document
 
 ## Quick Stats
 
-[![Build Status](https://travis-ci.org/GochoMugo/firebasin.svg?branch=master)](https://travis-ci.org/GochoMugo/firebasin)
+[![Build Status](https://travis-ci.org/GochoMugo/firebasin.svg?branch=dev)](https://travis-ci.org/GochoMugo/firebasin)
 
 |Topic                        | Details                |
 |----------------- |---------------|
-|Version                    | 0.1.1                   |
+|Version                    | 0.1.2                   |
 |Python                     | 2.7, 3.2               |
 |Development Status | 3 - Alpha            |
-|Last Updated            | 4th July, 2014    |
+|Last Updated            | 13th July, 2014    |
 
 > The Development Status of this Library warrants me to say that this API will keep growing. That's a good thing, right?
 
