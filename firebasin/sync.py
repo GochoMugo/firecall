@@ -4,7 +4,6 @@ building blocks.
 Please Note: Network requests using this methods is Blocking.
 '''
 
-from . import async
 import json
 import requests
 from time import time
@@ -72,20 +71,6 @@ class Firebase_sync:
                 newUrl += "&"
             newUrl += "format=export"
         return newUrl
-
-    def parent(self, **kwargs):
-        i = self.__url.rfind('/')
-        url = self.__url[:i]
-        if url == "https:/":
-            # Firebase is already parent
-            return None
-        return async.Firebase(url,  auth=kwargs.get("auth", None))
-
-    def child(self, **kwargs):
-        if not self.amust(("point",), kwargs):
-            pass
-        return async.Firebase(self.__url + kwargs["point"],
-                        auth=kwargs.get("auth", None))
 
     @staticmethod
     def __read(path):

@@ -2,18 +2,18 @@
 
 A Python Library for the [Firebase](https://firebaseio.com/) API.
 
-View this documentation  [here](https://gochomugo.github.io/firebasin/ "Documentation on firebasin")
+View this documentation  [here](https://gochomugo.github.io/firebasin/ "Documentation on firebasin") in a better and clean page.
 
 ## Quick Stats
 
 [![Build Status](https://travis-ci.org/GochoMugo/firebasin.svg?branch=dev)](https://travis-ci.org/GochoMugo/firebasin)
 
 |Topic                        | Details                |
-|----------------- |---------------|
+|----------------- |---------------:|
 |Version                    | 0.1.2                   |
-|Python                     | 2.7, 3.2               |
+|Python                     | 2.6, 2.7, 3.2, 3.3, 3.4 |
 |Development Status | 3 - Alpha            |
-|Last Updated            | 13th July, 2014    |
+|Last Updated            | 14th July, 2014    |
 
 > The Development Status of this Library warrants me to say that this API will keep growing. That's a good thing, right?
 
@@ -43,12 +43,12 @@ If you already have firebasin installed, you could **upgrade** by:
 
 2.  Create a Firebase instance
 
-    `my_firebase = firebasin.Firebase("https://my_firebase_name.firebaseio.com")`
+    `my-firebase = firebasin.Firebase("https://my-firebase_name.firebaseio.com")`
     
 While creating the Firebase instance, you might pass an access token to `auth` argument like shown below. The access token will persist across all transactions with the Firebase, unless you explicitly pass another access token to a method.
 
 ```python
-my_firebase = firebasin.Firebase("https://my_firebase_name.firebaseio.com", auth="access_token_here")
+my-firebase = firebasin.Firebase("https://my-firebase_name.firebaseio.com", auth="access_token_here")
 # Ensure that you have defined the function you pass to "error=".
 ```
 
@@ -68,7 +68,7 @@ Get a Firebase reference to the root of the Firebase.
 Example:
 
 ```python
-print(my_firebase.root())
+print(my-firebase.root())
 ```
 
 `.name()`
@@ -81,7 +81,7 @@ Get the last token of this location's URL.
 Example:
 
 ```python
-print(my_firebase.name())
+print(my-firebase.name())
 ```
 
 `.attr()`
@@ -92,7 +92,7 @@ Returns a tuple containing some details of the Firebase.
 * Returns a tuple e.g (time_of_creation, url_of_firebase, auth_token)
 
 ```python
-print(my_firebase.attr())
+print(my-firebase.attr())
 ```
 
 `.parent()`
@@ -105,7 +105,7 @@ Get a Firebase instance with the parent Location as its URL
 Example:
 
 ```python
-new_parent = my_firebase.parent()
+new_parent = my-firebase.parent()
 ```
 
 `.child(**kwargs)`
@@ -119,7 +119,7 @@ Get a Firebase instance with a child location as its URL
 Example:
 
 ```python
-new_child = my_firebase.child(point="/child")
+new_child = my-firebase.child(point="/child")
 ```
 
 ### Asynchronous Methods
@@ -140,18 +140,27 @@ Get data a particular location on your Firebase
     * point="location_to_read"
     * auth="access_token" (Optional)
     * callback=name_of_a_function (Optional)
+    * callbacks=\[list_of_callbacks\] (Optional)
     * error=name_of_a_function (Optional)
 * Returns `None`. Data fetched is passed to the callback function, if specified.
 
 Example:
 
+<span id="example1"></span>
 ```python
 # Callback function definition
 def hello(data):
     print(data)
-    
+
+def world(data):
+    with open('/home/user/.firebase-data', 'w') as data_file:
+        data_file.write(data)
+
 # Making a 'GET' request
-my_firebase.get(point="/child", auth="Ja2f29f4Gsk2d3bhxW2d8vDlK", callback=hello)
+my-firebase.get(point="/child", auth="Ja2f29f4Gsk2d3bhxW2d8vDlK", callback=hello)
+
+# A Request with multiple callbacks
+my-firebase,get(point="/child", auth="Ja2f29f4Gsk2d3bhxW2d8vDlK", callbacks=[hello, world])
 ```
 
 `.put(**kwargs)`
@@ -163,6 +172,7 @@ Write data into your Firebase
     * data="data_to_put"
     * auth="access_token" (Optional)
     * callback=name_of_a_function (Optional)
+    * callbacks=\[list_of_callbacks\] (Optional)
     * error=name_of_a_function (Optional)
 * Returns `None`. Data you just put is passed to the callback function, if specified.
 
@@ -174,6 +184,7 @@ Delete data from your Firebase
     * point="location_to_delete"
     * auth="access_token" (Optional)
     * callback=name_of_a_function (Optional)
+    * callbacks=\[list_of_callbacks\] (Optional)
     * error=name_of_a_function (Optional)
 * Returns `None`. A string saying `null` is passed to the callback function, if specified.
 
@@ -186,6 +197,7 @@ Export data from a location on your Firebase
     * auth="access_token" (Optional)
     * path="UNIX_path_to_file_to_write_to" (Optional)
     * callback=name_of_a_function (Optional)
+    * callbacks=\[list_of_callbacks\] (Optional)
     * error=name_of_a_function (Optional)
 * Returns `None`. Data you just exported is passed to the callback function, if specified.
 
@@ -199,6 +211,7 @@ Poll for changes at a Location on your Firebase.
     * point="location_to_read"
     * auth="access_token" (Optional)
     * callback=name_of_a_function (Optional)
+    * callbacks=\[list_of_callbacks\] (Optional)
     * error=name_of_a_function (Optional)
     * ignore_error=True (Optional) - Whether to keep watching incase of an error or make it Stop
     * frequency=10 (Optional) - The number of seconds between checks on the Firebase
@@ -210,7 +223,7 @@ Poll for changes at a Location on your Firebase.
 def keep_printing(data):
     print(data)
 
-watch = my_firebase.onChange(point="/watch_here", callback=keep_printing) # Creates a watch Object
+watch = my-firebase.onChange(point="/watch_here", callback=keep_printing) # Creates a watch Object
 watch.stop(20) # The Watch will be stopped after 20 seconds
 ```
 
@@ -226,14 +239,18 @@ The asynchronous methods are also available in synchronous flavor. To get a meth
 Example:
 
 ```python
-user = my_firebase.get_sync("/user")
+user = my-firebase.get_sync("/user")
 # Python will wait for the response before executing the next line of code
 # Callback arguments passed will be ignored
 ```
 
 ### Callbacks and Errors
 
-In all the asynchronous methods, a **Callback** can be assigned. The callback will be executed once response is received. In the case of `.onChange()` method, the callback will be inserted every time data changes at the point specified. 
+In all the **asynchronous** methods, a **Callback** can be assigned. The callback will be executed once response is received. In the case of `.onChange()` method, the callback will be called every time data changes at the point specified.
+
+Since version 0.1.2, multiple callbacks may be assigned using the **callbacks** parameter. The methods/functions, placed in a list and passed to the Firebase methods, will be executed sequentially as ordered in the particular list.
+
+See [example](#example1) of typical use.
 
 Functions assigned to **error** are executed when an error occurs while executing the action. The following errors may be caught:
 

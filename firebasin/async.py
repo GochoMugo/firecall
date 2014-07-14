@@ -17,35 +17,43 @@ class async:
 
     def __init__(self, type, request, **kwargs):
         callback = kwargs.get("callback", None)
+        # Allowing multiple callbacks
+        callbacks = kwargs.get("callbacks", None)
+        if callbacks is None and callback is not None:
+            callbacks = [callback]
+        elif callbacks and callback:
+            callbacks.append(callback) 
         error = kwargs.get("error", None)
         kwargs.pop("callback", None)
+        kwargs.pop("callbacks", None)
         kwargs.pop("error", None)
         # Creating a Thread for the Request & Callback & Error
         # and Starting it Immediately
         if type == "once":
             self.__request = Thread(target=self.__thread,
-                                    args=(request, kwargs, callback, error,))
+                                    args=(request, kwargs, callbacks, error,))
             self.__request.start()
         if type == "watch":
             self.__watch = None
             self.__event = Event()
             self.__request = Thread(target=self.watch,
-                                    args=(request, kwargs, callback, error,))
+                                    args=(request, kwargs, callbacks, error,))
             self.__request.start()
 
     # Wrapper Function for the Thread
-    def __thread(self, request, argv, callback, error):
+    def __thread(self, request, argv, callbacks, error):
             response = None
             try:
                 response = request(**argv)
-                if not callback and not response:
-                    callback(response)
+                if not callbacks and not response:
+                    for callback in callbacks:
+                        callback(response)
             except Exception as err:
                 if error:
                     error(err)
 
     # Watch Thread: this will be used to watch for changes
-    def watch(self, request, argv, callback, error):
+    def watch(self, request, argv, callbacks, error):
         fetches = argv.get("fetches", -1)
         frequency = argv.get("frequency", 10)
         ignore_error = argv.get("ignore_error", True)
@@ -58,8 +66,9 @@ class async:
         while self.__watch is True and fetches != 0:
             try:
                 newData = request(**argv)
-                if newData != oldData and not callback and not newData:
-                    callback(newData)
+                if newData != oldData and not callbacks and not newData:
+                    for callback in callbacks:
+                        callback(newData)
                     oldData = newData
             except Exception as err:
                 if ignore_error is False:
@@ -90,7 +99,7 @@ class Firebase(Firebase_sync):
     # Constructor
     def __init__(self, url, **kwargs):
         try:
-            url = valid_url(url)
+            self.__url = valid_url(url)
             Firebase_sync.__init__(self, url, kwargs.get("auth", None))
         except Exception as err:
             error = kwargs.get("error", None)
@@ -118,3 +127,17 @@ class Firebase(Firebase_sync):
     # There's need to return the Instance to allow stopping it
     def onChange(self, **kwargs):
         return async("watch", self.get_sync, **kwargs)
+
+    def parent(self, **kwargs):
+        i = self.__url.rfind('/')
+        url = self.__url[:i]
+        if url == "https:/":
+            # Firebase is already parent
+            return None
+        return Firebase(url,  auth=kwargs.get("auth", None))
+
+    def child(self, **kwargs):
+        if not self.amust(("point",), kwargs):
+            pass
+        return Firebase(self.__url + kwargs["point"],
+                        auth=kwargs.get("auth", None))
