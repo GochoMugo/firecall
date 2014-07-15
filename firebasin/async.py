@@ -18,11 +18,9 @@ class async:
     def __init__(self, type, request, **kwargs):
         callback = kwargs.get("callback", None)
         # Allowing multiple callbacks
-        callbacks = kwargs.get("callbacks", None)
-        if callbacks is None and callback is not None:
-            callbacks = [callback]
-        elif callbacks and callback:
-            callbacks.append(callback) 
+        callbacks = kwargs.get("callbacks", [])
+        if callback not in callbacks:
+            callbacks.append(callback)
         error = kwargs.get("error", None)
         kwargs.pop("callback", None)
         kwargs.pop("callbacks", None)
@@ -45,7 +43,7 @@ class async:
             response = None
             try:
                 response = request(**argv)
-                if not callbacks and not response:
+                if callbacks and response:
                     for callback in callbacks:
                         callback(response)
             except Exception as err:
@@ -66,7 +64,7 @@ class async:
         while self.__watch is True and fetches != 0:
             try:
                 newData = request(**argv)
-                if newData != oldData and not callbacks and not newData:
+                if newData != oldData and callbacks and newData:
                     for callback in callbacks:
                         callback(newData)
                     oldData = newData
