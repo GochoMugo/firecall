@@ -13,7 +13,7 @@ View this documentation  [here](https://gochomugo.github.io/firebasin/ "Document
 |Version                    | 0.1.2                   |
 |Python                     | 2.6, 2.7, 3.2, 3.3, 3.4 |
 |Development Status | 3 - Alpha            |
-|Last Updated            | 14th July, 2014    |
+|Last Updated            | 15th July, 2014    |
 
 > The Development Status of this Library warrants me to say that this API will keep growing. That's a good thing, right?
 
