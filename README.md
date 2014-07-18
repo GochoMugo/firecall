@@ -6,14 +6,14 @@ View this documentation  [here](https://gochomugo.github.io/firebasin/ "Document
 
 ## Quick Stats
 
-[![Build Status](https://travis-ci.org/GochoMugo/firebasin.svg?branch=dev)](https://travis-ci.org/GochoMugo/firebasin)
+[![Build Status](https://travis-ci.org/GochoMugo/firebasin.svg?branch=master)](https://travis-ci.org/GochoMugo/firebasin)
 
 |Topic                        | Details                |
 |----------------- |---------------:|
 |Version                    | 0.1.2                   |
 |Python                     | 2.6, 2.7, 3.2, 3.3, 3.4 |
-|Development Status | 3 - Alpha            |
-|Last Updated            | 15th July, 2014    |
+|Development Status | Stable            |
+|Last Updated            | 18th July, 2014    |
 
 > The Development Status of this Library warrants me to say that this API will keep growing. That's a good thing, right?
 
@@ -43,12 +43,12 @@ If you already have firebasin installed, you could **upgrade** by:
 
 2.  Create a Firebase instance
 
-    `my-firebase = firebasin.Firebase("https://my-firebase_name.firebaseio.com")`
-    
+    `my_firebase = firebasin.Firebase("https://my-firebase_name.firebaseio.com")`
+
 While creating the Firebase instance, you might pass an access token to `auth` argument like shown below. The access token will persist across all transactions with the Firebase, unless you explicitly pass another access token to a method.
 
 ```python
-my-firebase = firebasin.Firebase("https://my-firebase_name.firebaseio.com", auth="access_token_here")
+my_firebase = firebasin.Firebase("https://my-firebase_name.firebaseio.com", auth="access_token_here")
 # Ensure that you have defined the function you pass to "error=".
 ```
 
@@ -68,7 +68,7 @@ Get a Firebase reference to the root of the Firebase.
 Example:
 
 ```python
-print(my-firebase.root())
+print(my_firebase.root())
 ```
 
 `.name()`
@@ -81,7 +81,7 @@ Get the last token of this location's URL.
 Example:
 
 ```python
-print(my-firebase.name())
+print(my_firebase.name())
 ```
 
 `.attr()`
@@ -92,7 +92,7 @@ Returns a tuple containing some details of the Firebase.
 * Returns a tuple e.g (time_of_creation, url_of_firebase, auth_token)
 
 ```python
-print(my-firebase.attr())
+print(my_firebase.attr())
 ```
 
 `.parent()`
@@ -105,7 +105,7 @@ Get a Firebase instance with the parent Location as its URL
 Example:
 
 ```python
-new_parent = my-firebase.parent()
+new_parent = my_firebase.parent()
 ```
 
 `.child(**kwargs)`
@@ -119,7 +119,7 @@ Get a Firebase instance with a child location as its URL
 Example:
 
 ```python
-new_child = my-firebase.child(point="/child")
+new_child = my_firebase.child(point="/child")
 ```
 
 ### Asynchronous Methods
@@ -156,10 +156,10 @@ def world(data):
         data_file.write(data)
 
 # Making a 'GET' request
-my-firebase.get(point="/child", auth="Ja2f29f4Gsk2d3bhxW2d8vDlK", callback=hello)
+my_firebase.get(point="/child", auth="Ja2f29f4Gsk2d3bhxW2d8vDlK", callback=hello)
 
 # A Request with multiple callbacks
-my-firebase,get(point="/child", auth="Ja2f29f4Gsk2d3bhxW2d8vDlK", callbacks=[hello, world])
+my_firebase,get(point="/child", auth="Ja2f29f4Gsk2d3bhxW2d8vDlK", callbacks=[hello, world])
 ```
 
 `.put(**kwargs)`
@@ -222,7 +222,7 @@ Poll for changes at a Location on your Firebase.
 def keep_printing(data):
     print(data)
 
-watch = my-firebase.onChange(point="/watch_here", callback=keep_printing) # Creates a watch Object
+watch = my_firebase.onChange(point="/watch_here", callback=keep_printing) # Creates a watch Object
 watch.stop(20) # The Watch will be stopped after 20 seconds
 ```
 
@@ -238,7 +238,7 @@ The asynchronous methods are also available in synchronous flavor. To get a meth
 Example:
 
 ```python
-user = my-firebase.get_sync("/user")
+user = my_firebase.get_sync("/user")
 # Python will wait for the response before executing the next line of code
 # Callback arguments passed will be ignored
 ```
