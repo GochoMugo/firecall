@@ -68,6 +68,7 @@ Example:
 ```python
 print(my_firebase.root())
 ```
+<hr/>
 
 `.name()`
 

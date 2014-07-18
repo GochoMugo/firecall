@@ -2,17 +2,14 @@ var converter = new Showdown.converter();
 $(".markdown").each(function () {
     var markdown = $(this).html(),
            html;
-    
-    markdown = markdown.replace(/(\s+)\$\$end\$\$(\s+)/g, "$1</code>$2");       
-   markdown = markdown.replace(/(\s+)\$\$([^\$]+)\$\$(\n?)(\s+)/g, "$1<code class='language-$2'>$3");
-    
-   markdown = markdown.replace(/(\s+)\$end\$(\s+)/g, "$1</code></pre>$2");       
-   markdown = markdown.replace(/(\s+)\$([^\$]+)\$(\n?)(\s+)/g, "$1<pre><code class='language-$2'>$3");
-   
-   //markdown = markdown.replace(/<pre>(.*)\n([\s|\w|\W]*)<\/pre>/g, "<pre>$1<br>$2</pre>");
+
+    markdown = markdown.replace(/`{3}(\w+)\n/g, "<pre><code class='language-$1'>");
+    markdown = markdown.replace(/`{3}\n/g, "</code></pre><br>");
+    markdown = markdown.replace(/\n`{1}(.*)`{1}/g, "<br><pre><code class='language-python'>$1</code></pre><br>")
+
    html = converter.makeHtml(markdown);
 
-   $("#" + $(this).attr("data-target")).append(html);
+   $(this).empty().append(html);
 });
 
 Prism.highlightAll();
