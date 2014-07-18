@@ -146,7 +146,6 @@ Get data a particular location on your Firebase
 
 Example:
 
-<span id="example1"></span>
 ```python
 # Callback function definition
 def hello(data):
@@ -249,8 +248,6 @@ user = my-firebase.get_sync("/user")
 In all the **asynchronous** methods, a **Callback** can be assigned. The callback will be executed once response is received. In the case of `.onChange()` method, the callback will be called every time data changes at the point specified.
 
 Since version 0.1.2, multiple callbacks may be assigned using the **callbacks** parameter. The methods/functions, placed in a list and passed to the Firebase methods, will be executed sequentially as ordered in the particular list.
-
-See [example](#example1) of typical use.
 
 Functions assigned to **error** are executed when an error occurs while executing the action. The following errors may be caught:
 
