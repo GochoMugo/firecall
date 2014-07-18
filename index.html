@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="chrome=1">
-        <title>firebasin | v0.1.1</title>
+        <title>firebasin | 0.1.2</title>
         <link rel="stylesheet" href="css/styles.css">
         <link rel="stylesheet" href="css/pygment_trac.css">
         <link rel="stylesheet" href="css/prism.css">
@@ -48,224 +48,249 @@
                         <li><a href="http://github.com/GochoMugo/firebasin">Fork On <strong>GitHub</strong></a></li>
                 </ul>
             </header>
-            
+
 <section class='markdown' data-target="content">
-[![Build Status](https://travis-ci.org/GochoMugo/firebasin.svg?branch=master)](https://travis-ci.org/GochoMugo/firebasin)
+## Prerequisites
 
-# Installation #
-## Prerequisites ##
-This library largely uses the [Requests][Requests] Library. For **firebasin** to work, you need to have installed **Requests**. To install, use **pip**:
+**requests** Library
 
-$bash$ $ sudo pip install requests $end$
+This library depends on the `requests` library. If you have **NOT** installed the **requests** library yet
 
-## Installing ##
-Now comes the goodness. To install **firebasin**, just:
+`sudo pip install requests` 
 
-$bash$ $ sudo pip install firebasin $end$
+## Installation
 
-If you already have **firebasin** installed, you could **upgrade** by:
+To Install this library into your machine:
 
-$bash$ $ sudo pip install --upgrade firebasin $end$
+`sudo pip install firebasin`
 
-# Getting Started #
+If you already have firebasin installed, you could **upgrade** by:
 
-1.  Import the **firebasin** library:
+`sudo pip install --upgrade firebasin`
 
-    
-    $python$ import firebasin $end$
-    
-*   Create a *Firebase* instance:
+## Getting Started
 
-    $python$ my_firebase = firebasin.Firebase("https://my_firebase_name.firebaseio.com") $end$
+1.  Import the `firebasin` library
 
-    While creating the Firebase instance, you might pass an access token to `auth` argument like shown below. The access token will persist across all transactions with the Firebase, unless you explicitly pass another access token to a method.
+    `import firebasin`
 
-    $python$ 
-    my_firebase = firebasin.Firebase("https://my_firebase_name.firebaseio.com", auth="access_token_here")
-    $end$ 
+2.  Create a Firebase instance
 
-    Firebase is now ready to be used. It's time to conquer the World.
+    `my_firebase = firebasin.Firebase("https://my-firebase_name.firebaseio.com")`
 
-## Basic Methods ##
+While creating the Firebase instance, you might pass an access token to `auth` argument like shown below. The access token will persist across all transactions with the Firebase, unless you explicitly pass another access token to a method.
+
+```python
+my_firebase = firebasin.Firebase("https://my-firebase_name.firebaseio.com", auth="access_token_here")
+# Ensure that you have defined the function you pass to "error=".
+```
+
+Firebase is now ready to be used. It's time to conquer the World.
+
+### Basic Methods
 
 These are the basic methods available to any Firebase
 
-1.  $$python$$ .root() $$end$$
+`.root()`
 
-    Get a Firebase reference to the root of the Firebase. 
+Get a Firebase reference to the root of the Firebase. 
 
-    * Requires No arguments.
-    * Returns a String
+* Requires No arguments.
+* Returns a String
 
-    Example:
-    $python$ print my_firebase.root() $end$
-    <br>
+Example:
 
-*  $$python$$ .name() $$end$$
+```python
+print(my_firebase.root())
+```
 
-    Get the last token of this location's URL.
+`.name()`
 
-    * Requires No arguments
-    * Returns a String
+Get the last token of this location's URL.
 
-    Example:
-    $python$ print(my_firebase.name()) $end$
-    <br>
-    
-*   $$python$$ .attr() $$end$$
-    
-    Returns a tuple containing some details of the Firebase.
+* Requires No arguments
+* Returns a String
 
-    * Requires No arguments
-    * Returns a tuple e.g (time\_of\_creation, url\_of\_firebase, auth\_token)
+Example:
 
-    Example:
-    $python$ print(my_firebase.attr()) $end$
-    <br>
+```python
+print(my_firebase.name())
+```
 
-* $$python$$ .parent()  $$end$$
+`.attr()`
 
-    Get a Firebase instance with the parent Location as its URL
+Returns a tuple containing some details of the Firebase.
 
-    * Requires No arguments
-    * Returns a new Firebase Instance
+* Requires No arguments
+* Returns a tuple e.g (time_of_creation, url_of_firebase, auth_token)
 
-    Example:
-    $python$ new_parent = my_firebase.parent() $end$
-    <br>
+```python
+print(my_firebase.attr())
+```
 
-* $$python$$ .child(**kwargs) $$end$$
+`.parent()`
 
-    Get a Firebase instance with a child location as its URL
+Get a Firebase instance with the parent Location as its URL
 
-    * Requires:
-        * point="relative\_URL\_to\_child"
-    * Returns a Firebase Instance
+* Requires No arguments
+* Returns a new Firebase Instance
 
-    Example:
-    $python$ new_child = my_firebase.child(point="/child") $end$
-    <br>
+Example:
 
-## Asynchronous Methods ##
+```python
+new_parent = my_firebase.parent()
+```
+
+`.child(**kwargs)`
+
+Get a Firebase instance with a child location as its URL
+
+* Requires:
+    * point="relative_URL_to_child"
+* Returns a Firebase Instance
+
+Example:
+
+```python
+new_child = my_firebase.child(point="/child")
+```
+
+### Asynchronous Methods
 
 A Firebase instance has different methods that let you transact with it. The methods shown below are **Asynchronous**. This means that:
     
 * Python won't wait for the response, it will continue executing following lines of code
-* You should NOT assign return value to a variable. Doing this will always assign $$python$$ None $$end$$
+* You should NOT assign return value to a variable. Doing this will always assign `None`
 * You will have to use a callback to manipulate returned data from a request
 
 **Note:** There are also **Synchronous** methods you can use. Read along to see how to use them.
 
-* $$python$$ .get(**kwargs) $$end$$
+`.get(**kwargs)`
 
-    Get data a particular location on your Firebase
+Get data a particular location on your Firebase
 
-    * Requires:
-        * point="location\_to_read"
-        * auth="access\_token" (Optional)
-        * callback=name\_of\_a\_function (Optional)
-        * error=name\_of\_a\_function (Optional)
-    * Returns `None`. Data fetched is passed to the callback function, if specified.
+* Requires:
+    * point="location_to_read"
+    * auth="access_token" (Optional)
+    * callback=name_of_a_function (Optional)
+    * callbacks=\[list_of_callbacks\] (Optional)
+    * error=name_of_a_function (Optional)
+* Returns `None`. Data fetched is passed to the callback function, if specified.
 
-    Example:
-$python$
+Example:
+
+```python
 # Callback function definition
 def hello(data):
     print(data)
-    
+
+def world(data):
+    with open('/home/user/.firebase-data', 'w') as data_file:
+        data_file.write(data)
+
 # Making a 'GET' request
 my_firebase.get(point="/child", auth="Ja2f29f4Gsk2d3bhxW2d8vDlK", callback=hello)
-$end$
 
-*   $$python$$ .put(**kwargs) $$end$$
+# A Request with multiple callbacks
+my_firebase,get(point="/child", auth="Ja2f29f4Gsk2d3bhxW2d8vDlK", callbacks=[hello, world])
+```
 
-    Write data into your Firebase
+`.put(**kwargs)`
 
-    * Requires:
-        * point="location\_to\_read"
-        * data="data\_to\_put"
-        * auth="access\_token" (Optional)
-        * callback=name\_of\_a\_function (Optional)
-        * error=name\_of\_a\_function (Optional)
-    * Returns `None`. Data you just put is passed to the callback function, if specified.
+Write data into your Firebase
 
-*   $$python$$ .delete(**kwargs) $$end$$
+* Requires:
+    * point="location_to_read"
+    * data="data_to_put"
+    * auth="access_token" (Optional)
+    * callback=name_of_a_function (Optional)
+    * callbacks=\[list_of_callbacks\] (Optional)
+    * error=name_of_a_function (Optional)
+* Returns `None`. Data you just put is passed to the callback function, if specified.
 
-    Delete data from your Firebase
+`.delete(**kwargs)`
 
-    * Requires:
-        * point="location\_to\_delete"
-        * auth="access\_token" (Optional)
-        * callback=name\_of\_a\_function (Optional)
-        * error=name\_of\_a\_function (Optional)
-    * Returns `None`. A string saying `null` is passed to the callback function, if specified.
+Delete data from your Firebase
 
-* $$python$$ .export(**kwargs) $$end$$
+* Requires:
+    * point="location_to_delete"
+    * auth="access_token" (Optional)
+    * callback=name_of_a_function (Optional)
+    * callbacks=\[list_of_callbacks\] (Optional)
+    * error=name_of_a_function (Optional)
+* Returns `None`. A string saying `null` is passed to the callback function, if specified.
 
-    Export data from a location on your Firebase
+`.export(**kwargs)`
 
-    * Requires:
-        * point="location\_to\_read"
-        * auth="access\_token" (Optional)
-        * path="UNIX\_path\_to\_file\_to\_write\_to" (Optional)
-        * callback=name\_of\_a\_function (Optional)
-        * error=name\_of\_a\_function (Optional)
-        * mode=mode\_of\_file\_access (Optional). This can _w_ (write) or _a_ (append) 
-    * Returns `None`. Data you just exported is passed to the callback function, if specified.
+Export data from a location on your Firebase
 
-    **Note:** if the $$python$$ path $$end$$ argument is not given, this will behave similar to $$python$$ .get(**kwargs) $$end$$
+* Requires:
+    * point="location_to_read"
+    * auth="access_token" (Optional)
+    * path="UNIX_path_to_file_to_write_to" (Optional)
+    * callback=name_of_a_function (Optional)
+    * callbacks=\[list_of_callbacks\] (Optional)
+    * error=name_of_a_function (Optional)
+* Returns `None`. Data you just exported is passed to the callback function, if specified.
 
-* $$python$$ onChange(**kwargs) $$end$$
+**Note:** if the `path` argument is not given, this will behave similar to `.get(**kwargs)`
 
-    Poll for changes at a Location on your Firebase.
+`onChange(**kwargs)`
 
-    * Requires:
-        * point="location\_to\_read"
-        * auth="access\_token" (Optional)
-        * callback=name\_of\_a\_function (Optional)
-        * error=name\_of\_a\_function (Optional)
-        * ignore_error=True (Optional) - Whether to keep watching incase of an error or make it Stop
-        * frequency=10 (Optional) - The number of seconds between checks on the Firebase
-        * fetches=-1 (Optional) - The number of times to look at the Firebase before automatically stopping. It is a _positive_ integer. Giving a negative integer makes it be ignored. 
-    * Returns an Object representing the Watch. This object has one method:
-        *   _.stop(number_of_seconds)_ - Passing an integer or float will cause the watch to be stopped after the specified number of seconds. If no number is passed, the watch will be stopped as soon as Possible.
+Poll for changes at a Location on your Firebase.
 
-$python$
+* Requires:
+    * point="location_to_read"
+    * auth="access_token" (Optional)
+    * callback=name_of_a_function (Optional)
+    * callbacks=\[list_of_callbacks\] (Optional)
+    * error=name_of_a_function (Optional)
+    * ignore_error=True (Optional) - Whether to keep watching incase of an error or make it Stop
+    * frequency=10 (Optional) - The number of seconds between checks on the Firebase
+    * fetches=-1 (Optional) - The number of times to look at the Firebase before automatically stopping. It is a _positive_ integer. Giving a negative integer makes it be ignored. 
+* Returns an Object representing the Watch. This object has one method:
+    *   _.stop(number_of_seconds)_ - Passing an integer will cause the watch to be stopped after the specified number of seconds. If no number is passed, the watch will be stopped as soon as Possible.
+
+```python
+def keep_printing(data):
+    print(data)
+
 watch = my_firebase.onChange(point="/watch_here", callback=keep_printing) # Creates a watch Object
 watch.stop(20) # The Watch will be stopped after 20 seconds
-$end$
+```
 
 **Note:** 
-
 * there's **No** synchronous flavor of this method. For obvious reasons.
 * the stopping of a watch may take longer or shorter time for the action to kick in. This depends on your System.
 
 
-## Synchronous Methods ##
+### Synchronous Methods
 
-The asynchronous methods are also available in synchronous flavor. To get a method to work synchronously, append "_sync" to the name of the method.
+The asynchronous methods are also available in synchronous flavor. To get a method work synchronously, append "_sync" to the name of the method.
 
 Example:
 
-$python$
+```python
 user = my_firebase.get_sync("/user")
 # Python will wait for the response before executing the next line of code
 # Callback arguments passed will be ignored
-$end$
+```
 
-## Callbacks and Errors ##
+### Callbacks and Errors
 
-In all the asynchronous methods, a **Callback** can be assigned. The callback will be executed once response is received. In the case of $$python$$ .onChange() $$end$$ method, the callback will be inserted every time data changes at the point specified. 
+In all the **asynchronous** methods, a **Callback** can be assigned. The callback will be executed once response is received. In the case of `.onChange()` method, the callback will be called every time data changes at the point specified.
+
+Since version 0.1.2, multiple callbacks may be assigned using the **callbacks** parameter. The methods/functions, placed in a list and passed to the Firebase methods, will be executed sequentially as ordered in the particular list.
 
 Functions assigned to **error** are executed when an error occurs while executing the action. The following errors may be caught:
 
-1. $$python$$ EnvironmentError $$end$$ : This is caused by Trying to access a non-existant Firebase or Security Rules violation while trying to execute a query
-2. $$python$$ KeyError $$end$$ : This is caused when you do **not** pass a required argument to any function
-3. $$python$$ ConnectionError $$end$$ : This will occur mostly due to Network problems
+1. `EnvironmentError`: This is caused by Trying to access a non-existant Firebase or Security Rules violation while trying to execute a query
+2. `KeyError`: This is caused when you do **not** pass a required argument to any function
+3. `ConnectionError`: This will occur mostly due to Network problems
 
 If you wanted to catch errors according to this classes, you could do:
 
-$python$
+```python
 def caught_an_error(err):
     if err.__class__.__name__ == "KeyError":
         print("KeyError: " + str(err))
@@ -275,20 +300,22 @@ def caught_an_error(err):
         print("ConnectionError: " + str(err))
     else:
         print(err.__class__.__name__ + str(err))
-$end$
+```
 
 **Note:** All callbacks and error handling functions should be defined before assigning them to a method. Or else you love Bugs. 
 
 ## Issues
 
-Incase you encounter a bug, even if you could fix it yourself, please share with your fellow Pythonista :-) at the [Issues page](https://github.com/GochoMugo/firebasin/issues)
+Incase you encounter a bug, even if you could fix it yourself, please share with your fellow Pythonista :-) at the [Issues page](https://github.com/GochoMugo/firebasin/issues "Create an issue here")
 
-<center>**Conquer the World with Python**</center>
+## License
 
-[Requests]:http://docs.python-requests.org/ "Home for Requests Library"
+Source code for **firebasin** is issued and licensed under the [MIT License](http://opensource.org/licenses/MIT "OSI Page for MIT License").
+
+**Conquer the World with Python**
+
 </section>
-            <section id="content"></section>
-        
+
             <footer>
                 <p>This project is maintained by <a href="https://twitter.com/MUGO_GOCHO">Gocho Mugo</a></p>
                 <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>

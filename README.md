@@ -2,16 +2,18 @@
 
 A Python Library for the [Firebase](https://firebaseio.com/) API.
 
-View this documentation  [here](https://gochomugo.github.io/firebasin/ "Documentation on firebasin")
+View this documentation  [here](https://gochomugo.github.io/firebasin/ "Documentation on firebasin") in a better and clean page.
 
 ## Quick Stats
 
+[![Build Status](https://travis-ci.org/GochoMugo/firebasin.svg?branch=master)](https://travis-ci.org/GochoMugo/firebasin)
+
 |Topic                        | Details                |
-|----------------- |---------------|
-|Version                    | 0.1.1                   |
-|Python                     | 2.7, 3.2               |
-|Development Status | 3 - Alpha            |
-|Last Updated            | 4th July, 2014    |
+|----------------- |---------------:|
+|Version                    | 0.1.2                   |
+|Python                     | 2.6, 2.7, 3.2, 3.3, 3.4 |
+|Development Status | Stable            |
+|Last Updated            | 18th July, 2014    |
 
 > The Development Status of this Library warrants me to say that this API will keep growing. That's a good thing, right?
 
@@ -41,12 +43,12 @@ If you already have firebasin installed, you could **upgrade** by:
 
 2.  Create a Firebase instance
 
-    `my_firebase = firebasin.Firebase("https://my_firebase_name.firebaseio.com")`
-    
+    `my_firebase = firebasin.Firebase("https://my-firebase_name.firebaseio.com")`
+
 While creating the Firebase instance, you might pass an access token to `auth` argument like shown below. The access token will persist across all transactions with the Firebase, unless you explicitly pass another access token to a method.
 
 ```python
-my_firebase = firebasin.Firebase("https://my_firebase_name.firebaseio.com", auth="access_token_here")
+my_firebase = firebasin.Firebase("https://my-firebase_name.firebaseio.com", auth="access_token_here")
 # Ensure that you have defined the function you pass to "error=".
 ```
 
@@ -68,7 +70,6 @@ Example:
 ```python
 print(my_firebase.root())
 ```
-<hr/>
 
 `.name()`
 
@@ -139,6 +140,7 @@ Get data a particular location on your Firebase
     * point="location_to_read"
     * auth="access_token" (Optional)
     * callback=name_of_a_function (Optional)
+    * callbacks=\[list_of_callbacks\] (Optional)
     * error=name_of_a_function (Optional)
 * Returns `None`. Data fetched is passed to the callback function, if specified.
 
@@ -148,9 +150,16 @@ Example:
 # Callback function definition
 def hello(data):
     print(data)
-    
+
+def world(data):
+    with open('/home/user/.firebase-data', 'w') as data_file:
+        data_file.write(data)
+
 # Making a 'GET' request
 my_firebase.get(point="/child", auth="Ja2f29f4Gsk2d3bhxW2d8vDlK", callback=hello)
+
+# A Request with multiple callbacks
+my_firebase,get(point="/child", auth="Ja2f29f4Gsk2d3bhxW2d8vDlK", callbacks=[hello, world])
 ```
 
 `.put(**kwargs)`
@@ -162,6 +171,7 @@ Write data into your Firebase
     * data="data_to_put"
     * auth="access_token" (Optional)
     * callback=name_of_a_function (Optional)
+    * callbacks=\[list_of_callbacks\] (Optional)
     * error=name_of_a_function (Optional)
 * Returns `None`. Data you just put is passed to the callback function, if specified.
 
@@ -173,6 +183,7 @@ Delete data from your Firebase
     * point="location_to_delete"
     * auth="access_token" (Optional)
     * callback=name_of_a_function (Optional)
+    * callbacks=\[list_of_callbacks\] (Optional)
     * error=name_of_a_function (Optional)
 * Returns `None`. A string saying `null` is passed to the callback function, if specified.
 
@@ -185,6 +196,7 @@ Export data from a location on your Firebase
     * auth="access_token" (Optional)
     * path="UNIX_path_to_file_to_write_to" (Optional)
     * callback=name_of_a_function (Optional)
+    * callbacks=\[list_of_callbacks\] (Optional)
     * error=name_of_a_function (Optional)
 * Returns `None`. Data you just exported is passed to the callback function, if specified.
 
@@ -198,6 +210,7 @@ Poll for changes at a Location on your Firebase.
     * point="location_to_read"
     * auth="access_token" (Optional)
     * callback=name_of_a_function (Optional)
+    * callbacks=\[list_of_callbacks\] (Optional)
     * error=name_of_a_function (Optional)
     * ignore_error=True (Optional) - Whether to keep watching incase of an error or make it Stop
     * frequency=10 (Optional) - The number of seconds between checks on the Firebase
@@ -232,7 +245,9 @@ user = my_firebase.get_sync("/user")
 
 ### Callbacks and Errors
 
-In all the asynchronous methods, a **Callback** can be assigned. The callback will be executed once response is received. In the case of `.onChange()` method, the callback will be inserted every time data changes at the point specified. 
+In all the **asynchronous** methods, a **Callback** can be assigned. The callback will be executed once response is received. In the case of `.onChange()` method, the callback will be called every time data changes at the point specified.
+
+Since version 0.1.2, multiple callbacks may be assigned using the **callbacks** parameter. The methods/functions, placed in a list and passed to the Firebase methods, will be executed sequentially as ordered in the particular list.
 
 Functions assigned to **error** are executed when an error occurs while executing the action. The following errors may be caught:
 
@@ -258,6 +273,10 @@ def caught_an_error(err):
 
 ## Issues
 
-Incase you encounter a bug, even if you could fix it yourself, please share with your fellow Pythonista :-) at the [Issues page](https://github.com/GochoMugo/firebasin/issues)
+Incase you encounter a bug, even if you could fix it yourself, please share with your fellow Pythonista :-) at the [Issues page](https://github.com/GochoMugo/firebasin/issues "Create an issue here")
+
+## License
+
+Source code for **firebasin** is issued and licensed under the [MIT License](http://opensource.org/licenses/MIT "OSI Page for MIT License").
 
 **Conquer the World with Python**
