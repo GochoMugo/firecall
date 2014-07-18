@@ -4,4 +4,3 @@ html: docs templates
 	@git commit -m "Updating Documentation"
 	@echo "Docs generated well..."
 
-.PHONY: html
