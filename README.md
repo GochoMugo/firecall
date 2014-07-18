@@ -211,11 +211,11 @@ Export data from a location on your Firebase
     * error=name\_of\_a\_function (Optional)
 * Returns `None`. Data you just exported is passed to the callback function, if specified.
 
-**Note:** if the `path` argument is not given, this will behave similar to `.get(**kwargs)`
+**Note:** if the `path` argument is not given, this will behave similar to `get()` method of the Firebase instance.
 
 <hr>
 
-`onChange(**kwargs)`
+`.onChange(**kwargs)`
 
 Poll for changes at a Location on your Firebase.
 
@@ -273,15 +273,15 @@ Functions assigned to **error** are executed when an error occurs while executin
 If you wanted to catch errors according to this classes, you could do:
 
 ```python
-def caught_an_error(err):
-    if err.__class__.__name__ == "KeyError":
+def caught\_an\_error(err):
+    if err.\_\_class\_\_.\_\_name\_\_ == "KeyError":
         print("KeyError: " + str(err))
-    elif err.__class__.__name__ == "EnvironmentError":
+    elif err.\_\_class\_\_.\_\_name\_\_ == "EnvironmentError":
         print("EnvironmentError: " + str(err))
-    elif err.__class__.__name__ == "ConnectionError":
+    elif err.\_\_class\_\_.\_\_name\_\_ == "ConnectionError":
         print("ConnectionError: " + str(err))
     else:
-        print(err.__class__.__name__ + str(err))
+        print(err.\_\_class\_\_.\_\_name\_\_ + str(err))
 ```
 
 **Note:** All callbacks and error handling functions should be defined before assigning them to a method.
