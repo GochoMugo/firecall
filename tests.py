@@ -32,8 +32,8 @@ class firebasinTests(unittest.TestCase):
             'ctrl_char_x00': 'https://my_firebase.firebaseio.com/use\x00r',
         }
         for key in URLS:
-            with self.assertRaises(ValueError):
-                firebasin.general.valid_url(URLS[key])
+            self.assertRaises(ValueError, firebasin.general.valid_url,
+                              URLS[key])
 
     def test_attr(self):
         url = 'https://firebase.firebaseio.com'
