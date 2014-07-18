@@ -273,6 +273,10 @@ def caught_an_error(err):
 
 ## Issues
 
-Incase you encounter a bug, even if you could fix it yourself, please share with your fellow Pythonista :-) at the [Issues page](https://github.com/GochoMugo/firebasin/issues)
+Incase you encounter a bug, even if you could fix it yourself, please share with your fellow Pythonista :-) at the [Issues page](https://github.com/GochoMugo/firebasin/issues "Create an issue here")
+
+## License
+
+Source code for **firebasin** is issued and licensed under the [MIT License](http://opensource.org/licenses/MIT "OSI Page for MIT License").
 
 **Conquer the World with Python**
