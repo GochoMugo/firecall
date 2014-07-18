@@ -40,8 +40,8 @@ class firebasinTests(unittest.TestCase):
         auth = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
         firebase = firebasin.Firebase(url, auth=auth)
         attrs = firebase.attr()
-        self.assertIn(url, attrs, 'url in .attr() missing')
-        self.assertIn(auth, attrs, 'token in .attr() missing')
+        self.assertTrue(url in attrs, 'url in .attr() missing')
+        self.assertTrue(auth in attrs, 'token in .attr() missing')
 
     def test_root(self):
         root = self.firebase.root()
