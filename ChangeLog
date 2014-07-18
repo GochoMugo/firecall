@@ -1,3 +1,14 @@
+---------Version 0.1.2------------
+18th July 2014
++   Partial PEP8 Conformity
++   Added DocStrings
++   Cleaner code
++   Added unit tests
++   Added compatability with Python 2.* and 3.*
++   Multiple callbacks with the keyworded argument:
+        * callbacks=[callback1, callback2]
+
+
 ----------Version 0.1.1 -----------
 [04-07-2014]
     + **.export()** method requires the *path* and *mode*

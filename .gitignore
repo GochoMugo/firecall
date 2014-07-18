@@ -1,6 +1,6 @@
-dist/
-firebasin/*.pyc
-firebasin/__pycache__/
+*.pyc
 build/
-test*
+dist/
+firebasin/__pycache__/
+test.py
 TODO
