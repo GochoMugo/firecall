@@ -39,17 +39,17 @@ If you already have firebasin installed, you could **upgrade** by:
 
 1.  Import the `firebasin` library
 
-    `import firebasin`
+`import firebasin`
 
 2.  Create a Firebase instance
 
-    `my\_firebase = firebasin.Firebase("https://my-firebase\_name.firebaseio.com")`
+`my\_firebase = firebasin.Firebase("https://my-firebase\_name.firebaseio.com")`
 
 While creating the Firebase instance, you might pass an access token to `auth` argument like shown below. The access token will persist across all transactions with the Firebase, unless you explicitly pass another access token to a method.
 
 ```python
 my\_firebase = firebasin.Firebase("https://my-firebase\_name.firebaseio.com", auth="access\_token\_here")
-# Ensure that you have defined the function you pass to "error=".
+\# Ensure that you have defined the function you pass to "error=".
 ```
 
 Firebase is now ready to be used. It's time to conquer the World.
@@ -254,8 +254,8 @@ Example:
 
 ```python
 user = my\_firebase.get\_sync("/user")
-# Python will wait for the response before executing the next line of code
-# Callback arguments passed will be ignored
+\# Python will wait for the response before executing the next line of code
+\# Callback arguments passed will be ignored
 ```
 
 ### Callbacks and Errors
