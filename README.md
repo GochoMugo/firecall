@@ -17,8 +17,6 @@ View Full documentation  [here][documentation] in a better and clean page.
 
 ## Prerequisites
 
-**requests** Library
-
 This library depends on the `requests` library. If you have **NOT** installed the [requests](docs.python-requests.org/ "Requests Home Page") library yet
 
 `sudo pip install requests` 
@@ -64,11 +62,11 @@ my_firebase.get(point="/" callback=print_for_me)
 
 The methods above _(from `.get()` downwards)_ are **asynchronous**. But if you wanted to use them synchronously, just appending *_sync* to the method name. E.g. `.get_sync`
 
+**Asynchronousity** is at the heart of the Implementation.
+
 ## Callbacks and Errors
 
-Asynchronous methods allow passing a callback, an error handler or even a list of callbacks.
-
-Data from the Firebase is passed to the callbacks. Errors are also passed to the Error handler function.
+Asynchronous methods allow passing a callback, an error handler or even a list of callbacks. Data from the Firebase is passed to the callbacks. Errors are also passed to the Error handler function.
 
 Find more information on callbacks and errors using the [Full documentation][documentation].
 

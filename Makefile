@@ -1,3 +1,5 @@
+.PHONY: dist clean
+
 dist:
 	@cp README.md README.txt
 	@python setup.py sdist upload
@@ -5,5 +7,5 @@ dist:
 	@echo 'Dist build and uploaded...'
 
 clean:
-	@rm -r firebasin/*pyc firebasin/__pycache__
+	@rm -rf firebasin/*pyc firebasin/__pycache__ build dist
 	@echo 'Cleaned...'
