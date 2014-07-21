@@ -66,12 +66,13 @@ class firebasinTests(unittest.TestCase):
         correct_url = ''.join([self.url, '/gocho', '.json', '?', 'auth=AUTH'])
         self.assertEqual(corrected_url, correct_url, 'Correcting URL fails')
         corrected_url = self.firebase.url_correct('/gocho', export=True)
-        correct_url = ''.join([self.url, '/gocho', '.json', '?', 'format=export'])
+        correct_url = ''.join([self.url, '/gocho', '.json', '?',
+                               'format=export'])
         self.assertEqual(corrected_url, correct_url, 'Correcting URL fails')
         corrected_url = self.firebase.url_correct('/gocho',
-                                    auth='AUTH', export=True)
+                                                  auth='AUTH', export=True)
         correct_url = ''.join([self.url, '/gocho', '.json', '?', 'auth=AUTH',
-                                      '&', 'format=export'])
+                               '&', 'format=export'])
         self.assertEqual(corrected_url, correct_url, 'Correcting URL fails')
 
     def test_parent(self):

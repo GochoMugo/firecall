@@ -161,9 +161,10 @@ class Firebase_sync:
         and the data will be the "value". Thus a key-value pair
         '''
         self.amust(("point", "data"), kwargs)
-        response = requests.post(self.url_correct(kwargs["point"],
-                                kwargs.get("auth", self.__auth)),
-                                data=json.dumps(kwargs["data"]))
+        response = requests.post(self.url_correct(
+            kwargs["point"],
+            kwargs.get("auth", self.__auth)),
+            data=json.dumps(kwargs["data"]))
         self.catch_error(response)
         return response.content
 
@@ -175,9 +176,10 @@ class Firebase_sync:
         '''
         self.amust(("point", "data"), kwargs)
         # Sending the 'PATCH' request
-        response = requests.patch(self.url_correct(kwargs["point"],
-                                kwargs.get("auth", self.__auth)),
-                                data=json.dumps(kwargs["data"]))
+        response = requests.patch(self.url_correct(
+            kwargs["point"],
+            kwargs.get("auth", self.__auth)),
+            data=json.dumps(kwargs["data"]))
         self.catch_error(response)
         return response.content
 
@@ -187,8 +189,9 @@ class Firebase_sync:
         Requires the 'point' parameter as a keyworded argument.
         '''
         self.amust(("point",), kwargs)
-        response = requests.delete(self.url_correct(kwargs["point"],
-                                kwargs.get("auth", self.__auth)))
+        response = requests.delete(self.url_correct(
+            kwargs["point"],
+            kwargs.get("auth", self.__auth)))
         self.catch_error(response)
         return response.content
 
