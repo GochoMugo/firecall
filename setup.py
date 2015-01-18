@@ -1,30 +1,30 @@
 '''
-firebasin
-=======
+firecall
+======
 A Python Implementation of the
 `Firebase REST API <https://www.firebase.com/docs/rest-api.html>`_.
 
 A complete and updated documentation of this Module may be found at
 `firebasin's github project page
- <https://gochomugo.github.io/GochoMugo/firebasin>`_.
+ <https://gochomugo.github.io/GochoMugo/firecall>`_.
 
 Source code is licensed under the MIT License.
- Copyright (c) 2014 GOCHO MUGO
+ Copyright (c) 2014-2015 Gocho Mugo <mugo@forfuture.co.ke>
 '''
 
 from distutils.core import setup
 
 
 setup(
-    name="firebasin",
-    packages=["firebasin"],
-    version="0.1.2",
+    name="firecall",
+    packages=["firecall"],
+    version="1.0.0",
     author="Gocho Mugo I",
-    author_email="gochomugo.developer@gmail.com",
-    url="https://gochomugo.github.io/firebasin/",
-    download_url="https://github.com/GochoMugo/firebasin/zipball/master",
-    description="Python library for Firebase API",
-    keywords=["firebase", "firebasin", "REST", "API"],
+    author_email="mugo@forfuture.co.ke",
+    url="https://gochomugo.github.io/firecall/",
+    download_url="https://github.com/GochoMugo/firecall/zipball/master",
+    description="Python helper library for Firebase <https://firebase.com>",
+    keywords=["firebase", "firebasin", "REST", "API", "firecall"],
     long_description=__doc__,
     license="MIT",
     classifiers=[

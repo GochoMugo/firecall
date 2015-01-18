@@ -1,3 +1,8 @@
+---------Version 1.0.0------------
+19th January 2015
++   module name change. firebasin is now firecall. This avoids name clashes.
+
+
 ---------Version 0.1.2------------
 18th July 2014
 +   Partial PEP8 Conformity
@@ -16,6 +21,7 @@
         * *fetches* - the number of the fetches the watch should do before stopping
         * *frequency* - number of seconds before checking for chenges in the Firebase point 
     + **.attr()** returns a tuple e.g. (time_of_creation, url_of_firebase, authentication_token)
+
 
 ---------- Version 0.1.0 ----------
 [29-05-2014]    +   '.onChange()' method and its helper function '.stop()' added. 

@@ -1,17 +1,17 @@
 '''
-Unit Testing for firebasin
+Unit Testing for firecall
 ==================
 '''
 
-import firebasin
+import firecall
 import unittest
 
 
-class firebasinTests(unittest.TestCase):
+class firecallTests(unittest.TestCase):
 
     def setUp(self):
         self.url = 'https://firebase.firebaseio.com/users/mugo'
-        self.firebase = firebasin.Firebase(self.url)
+        self.firebase = firecall.Firebase(self.url)
 
     def tearDown(self):
         pass
@@ -32,13 +32,13 @@ class firebasinTests(unittest.TestCase):
             'ctrl_char_x00': 'https://my_firebase.firebaseio.com/use\x00r',
         }
         for key in URLS:
-            self.assertRaises(ValueError, firebasin.general.valid_url,
+            self.assertRaises(ValueError, firecall.general.valid_url,
                               URLS[key])
 
     def test_attr(self):
         url = 'https://firebase.firebaseio.com'
         auth = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-        firebase = firebasin.Firebase(url, auth=auth)
+        firebase = firecall.Firebase(url, auth=auth)
         attrs = firebase.attr()
         self.assertTrue(url in attrs, 'url in .attr() missing')
         self.assertTrue(auth in attrs, 'token in .attr() missing')

@@ -1,6 +1,6 @@
 *.pyc
 build/
 dist/
-firebasin/__pycache__/
+firecall/__pycache__/
 test.py
 TODO

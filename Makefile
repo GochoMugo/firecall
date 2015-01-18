@@ -7,5 +7,5 @@ dist:
 	@echo 'Dist build and uploaded...'
 
 clean:
-	@rm -rf firebasin/*pyc firebasin/__pycache__ build dist
+	@rm -rf firecall/*pyc firecall/__pycache__ build dist
 	@echo 'Cleaned...'
