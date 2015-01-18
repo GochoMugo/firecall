@@ -88,14 +88,17 @@ Find more information on callbacks and errors using the [Full documentation][doc
 
 ## Contributions and Issues
 
-If you wanted to add a feature to the next version, you could [Fork](https://github.com/GochoMugo/firebasin/fork "Fork Me Please!!!") the repo, hack it and send a Pull Request.
+If you wanted to add a feature to the next version, you could [Fork](https://github.com/GochoMugo/firecall/fork "Fork Me Please!!!") the repo, hack it and send a Pull Request.
 
-Incase you encounter a bug, even if you could fix it yourself, please share at the [Issues page](https://github.com/GochoMugo/firebasin/issues "Create an issue here")
+Incase you encounter a bug, even if you could fix it yourself, please share at the [Issues page](https://github.com/GochoMugo/firecall/issues "Create an issue here")
 
 
 ## License
 
-Source code for **firebasin** is issued and licensed under the [MIT License](http://opensource.org/licenses/MIT "OSI Page for MIT License").
+__The MIT License (MIT)__
+
+Copyright (c) 2014-2015 Gocho Mugo <mugo@forfuture.co.ke>
+
 
 **Conquer the World with Python**
 

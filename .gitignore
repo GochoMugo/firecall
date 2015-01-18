@@ -2,5 +2,4 @@
 build/
 dist/
 firecall/__pycache__/
-test.py
-TODO
+MANIFEST
