@@ -1,11 +1,11 @@
-title: Minimal by Steve Smith | Jekyll'd by GochoMugo
-project_name: minimal-jekyll
+title: Firecall </> by GochoMugo
+project_name: firecall
 description: >
-  A minimal theme
-repository_url: https://github.com/GochoMugo/minimal-jekyll
-repository_shorthand: GochoMugo/minimal-jekyll
+  A Python helper library for Firebase.
+repository_url: https://github.com/GochoMugo/firecall
+repository_shorthand: GochoMugo/firecall
 
-baseurl: ""
+baseurl: "https://gochomugo.github.io/firecall"
 
 author_name: GochoMugo
 author_url: https://github.com/GochoMugo

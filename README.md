@@ -1,24 +1,14 @@
 
-# minimal-jekyll
+# firecall
 
-[![screenshot](img/minimal-jekyll.png)](img/minimal-jekyll.png)
-
-View [live demo][demo].
-
-
-## getting started:
-
-1. Fork/Clone this repository
-* Serve the starter template with: `jekyll serve`
-* Navigate to http://127.0.0.1:4000/setup/ for setup instructions
-* Smile at yourself cause you are a genius :smiley_cat:
+View the [documentation][docs].
 
 
 ## license:
 
 __The MIT License (MIT)__
 
-Copyright (c) 2014 Gocho Mugo <mugo@forfuture.co.ke>
+Copyright (c) 2014-2015 Gocho Mugo <mugo@forfuture.co.ke>
 
 
-[demo]:https://gochomugo.github.io/minimal-jekyll
+[docs]:https://gochomugo.github.io/minimal-jekyll
