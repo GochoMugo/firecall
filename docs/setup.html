@@ -1,0 +1,73 @@
+---
+layout: null
+permalink: /setup/
+---
+
+<!doctype html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+    <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ '/css/styles.css' | prepend: site.baseurl }}">
+    <link rel="stylesheet" href="{{ '/css/pygment_trac.css' | prepend: site.baseurl }}">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+    <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | prepend: site.baseurl | prepend: site.url }}" />
+  </head>
+
+  <body>
+    <div class="wrapper">
+
+      <header>
+        <h1 data-toggle="tooltip" title="site.project_name">{{ site.project_name }}</h1>
+        <p data-toggle="tooltip" title="site.description" data-placement="left">{{ site.description }}</p>
+        <p class="view"><a href="{{ site.repository_url }}"><span data-toggle="tooltip" title="site.repository_url">View the Project on GitHub</span> <small data-toggle="tooltip" title="site.repository_shorthand" data-placement="left">{{ site.repository_shorthand }}</small></a></p>
+        <ul>
+          <li><a href="{{ site.repository_url }}/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="{{ site.repository_url }}/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="{{ site.repository_url }}">Fork On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+
+      <section>
+
+        <h1>Setup is easy</h1>
+        <p>See the elements with dotted borders? Hover your cursor over them to see the variables that set them accordingly.</p>
+        <h2>More variables</h2>
+        <p>The download links on the left are generated using <code>site.repository_url</code></p>
+        <p><code>site.title</code> is shown as the title in tabs. <code>page.title</code> may be used to overide <code>site.title</code></p>
+        <p><code>page.excerpt</code> may also be used to add description of page.</p>
+        <h2>Docs</h2>
+        <p>You can simply place any markdown files in the <code>docs/</code> directory for your documentation. They will be automatically converted to HTML.</p>
+        <p>If need be, you may use HTML files instead.</p>
+        <h3>Done with Setup</h3>
+        <p>You may remove <code>docs/setup.html</code>. It is not required for deployment.</p>
+
+      </section>
+
+      <footer>
+        <p>This project is maintained by <a href="{{ site.author_url }}" data-toggle="tooltip" title="site.author_name + site.author_url">{{ site.author_name }}</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a> &mdash; Jekyll'd by <a href="https://github.com/GochoMugo">Gocho Mugo</a></small></p>
+      </footer>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script src="{{ '/js/scale.fix.js' | prepend: site.baseurl }}"></script>
+    <script type="text/javascript">
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip().css("border", "1px dotted black");
+    });
+    </script>
+
+  </body>
+</html>

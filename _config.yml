@@ -1,0 +1,13 @@
+title: Minimal by Steve Smith | Jekyll'd by GochoMugo
+project_name: minimal-jekyll
+description: >
+  A minimal theme
+repository_url: https://github.com/GochoMugo/minimal-jekyll
+repository_shorthand: GochoMugo/minimal-jekyll
+
+baseurl: ""
+
+author_name: GochoMugo
+author_url: https://github.com/GochoMugo
+
+markdown: kramdown
