@@ -1,0 +1,11 @@
+.stats {
+    text-align: right;
+}
+.stats table {
+    display: inline;
+}
+
+.language {
+    margin-bottom: 20px;
+}
+

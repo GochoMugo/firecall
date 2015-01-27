@@ -14,7 +14,8 @@ A Firebase instance has different methods that let you transact with it. The met
 
 **Note:** There are also **Synchronous** methods you can use. Read along to see how to use them.
 
-`.get(**kwargs)`
+
+## .get(**kwargs)
 
 Get data a particular location on your Firebase
 
@@ -28,23 +29,26 @@ Get data a particular location on your Firebase
 
 Example:
 
-```python
-\# Callback function definition
+<pre><code class="language-python"># Callback function definition
 def hello(data):
     print(data)
-\# Another Callback
+
+# Another Callback
 def world(data):
     with open('/home/user/.firebase-data', 'w') as data_file:
         data_file.write(data)
-\# Making a 'GET' request
-my\_firebase.get(point="/child", auth="Ja2f29f4Gsk2d3bhxW2d8vDlK", callback=hello)
-\# A Request with multiple callbacks
-my\_firebase,get(point="/child", auth="Ja2f29f4Gsk2d3bhxW2d8vDlK", callbacks=\[hello, world\])
-```
 
+# Making a 'GET' request
+my_firebase.get(point="/child", auth="Ja2f29f4Gsk2d3bhxW2d8vDlK", callback=hello)
+
+# A Request with multiple callbacks
+my_firebase,get(point="/child", auth="Ja2f29f4Gsk2d3bhxW2d8vDlK", callbacks=[hello, world])
+</code></pre>
+<div class="spacefix"></div>
 <hr>
 
-`.put(**kwargs)`
+
+## .put(**kwargs)
 
 Write data into your Firebase
 
@@ -59,7 +63,8 @@ Write data into your Firebase
 
 <hr>
 
-`.delete(**kwargs)`
+
+## .delete(**kwargs)
 
 Delete data from your Firebase
 
@@ -73,7 +78,8 @@ Delete data from your Firebase
 
 <hr>
 
-`.export(**kwargs)`
+
+## .export(**kwargs)
 
 Export data from a location on your Firebase
 
@@ -90,7 +96,8 @@ Export data from a location on your Firebase
 
 <hr>
 
-`.onChange(**kwargs)`
+
+## .onChange(**kwargs)
 
 Poll for changes at a Location on your Firebase.
 
@@ -106,14 +113,13 @@ Poll for changes at a Location on your Firebase.
 * Returns an Object representing the Watch. This object has one method:
     *   _.stop(number\_of\_seconds)_ - Passing an integer will cause the watch to be stopped after the specified number of seconds. If no number is passed, the watch will be stopped as soon as Possible.
 
-```python
-def keep\_printing(data):
+<pre><code class="language-python">def keep_printing(data):
     print(data)
-\# Creates a watch Object
-watch = my\_firebase.onChange(point="/watch_here", callback=keep\_printing) 
-watch.stop(20)
-\# The Watch will be stopped after 20 seconds
-```
+
+# Creates a watch Object
+watch = my_firebase.onChange(point="/watch_here", callback=keep_printing) 
+watch.stop(20) # The Watch will be stopped after 20 seconds
+</code></pre>
 
 **Note:** 
 
@@ -135,16 +141,15 @@ Functions assigned to **error** are executed when an error occurs while executin
 
 If you wanted to catch errors according to this classes, you could do:
 
-```python
-def caught\_an\_error(err):
-    if err.\_\_class\_\_.\_\_name\_\_ == "KeyError":
+<pre><code class="language-python">def caught_an_error(err):
+    if err.__class__.__name__ == "KeyError":
         print("KeyError: " + str(err))
-    elif err.\_\_class\_\_.\_\_name\_\_ == "EnvironmentError":
+    elif err.__class__.__name__ == "EnvironmentError":
         print("EnvironmentError: " + str(err))
-    elif err.\_\_class\_\_.\_\_name\_\_ == "ConnectionError":
+    elif err.__class__.__name__ == "ConnectionError":
         print("ConnectionError: " + str(err))
     else:
-        print(err.\_\_class\_\_.\_\_name\_\_ + str(err))
-```
+        print(err.__class__.__name__ + str(err))
+</code></pre>
 
 **Note:** All callbacks and error handling functions should be defined before assigning them to a method.

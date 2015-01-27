@@ -5,7 +5,7 @@ permalink: /
 
 # firecall
 
-A Python Helper Library for [Firebase](https://firebaseio.com/).
+A Python Helper Library for [Firebase](https://firebase.com/).
 
 
 ## Quick Stats
@@ -24,4 +24,4 @@ A Python Helper Library for [Firebase](https://firebaseio.com/).
 
 Source code for **firecall** is issued and licensed under the [MIT License](http://opensource.org/licenses/MIT "OSI Page for MIT License").
 
-<center>**Conquer the World with Python**</center>
+<center><em>Conquer the World with Python</em></center>

@@ -10,8 +10,7 @@ The asynchronous methods are also available in synchronous flavor. To get a meth
 
 Example:
 
-```python
-user = my\_firebase.get\_sync("/user")
-\# Python will wait for the response before executing the next line of code
-\# Callback arguments passed will be ignored
-```
+<pre><code class="language-python">user = my_firebase.get_sync("/user")
+# Python will wait for the response before executing the next line of code
+# Callback arguments passed will be ignored
+</code></pre>

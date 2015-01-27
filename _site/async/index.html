@@ -1,0 +1,234 @@
+<!doctype html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <meta name="description" content="A Python helper library for Firebase.
+">
+  <title>Firecall </> by GochoMugo</title>
+
+  <link rel="stylesheet" href="/firecall/css/styles.css">
+  <link rel="stylesheet" href="/firecall/css/prism.css">
+  <!--[if lt IE 9]>
+  <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link rel="canonical" href="/firecall/async/">
+  <link rel="alternate" type="application/rss+xml" title="Firecall </> by GochoMugo" href="/firecall/feed.xml" />
+</head>
+
+
+  <body>
+    <div class="wrapper">
+
+      <header>
+  <h1>firecall</h1>
+  <p>A Python helper library for Firebase.
+</p>
+  <p class="view"><a href="https://github.com/GochoMugo/firecall">View the Project on GitHub <small>GochoMugo/firecall</small></a></p>
+  <ul>
+    <li><a href="https://github.com/GochoMugo/firecall/zipball/master">Download <strong>ZIP File</strong></a></li>
+    <li><a href="https://github.com/GochoMugo/firecall/tarball/master">Download <strong>TAR Ball</strong></a></li>
+    <li><a href="https://github.com/GochoMugo/firecall">Fork On <strong>GitHub</strong></a></li>
+  </ul>
+</header>
+
+
+      <section>
+
+        <h1 id="asynchronous-methods">Asynchronous Methods</h1>
+
+<p>A Firebase instance has different methods that let you transact with it. The methods shown below are <strong>Asynchronous</strong>. This means that:</p>
+
+<ul>
+  <li>Python won’t wait for the response, it will continue executing following lines of code</li>
+  <li>You should NOT assign return value to a variable. Doing this will always assign <code>None</code></li>
+  <li>You will have to use a callback to manipulate returned data from a request</li>
+</ul>
+
+<p><strong>Note:</strong> There are also <strong>Synchronous</strong> methods you can use. Read along to see how to use them.</p>
+
+<h2 id="getkwargs">.get(**kwargs)</h2>
+
+<p>Get data a particular location on your Firebase</p>
+
+<ul>
+  <li>Requires:
+    <ul>
+      <li>point=”location_to_read”</li>
+      <li>auth=”access_token” (Optional)</li>
+      <li>callback=name_of_a_function (Optional)</li>
+      <li>callbacks=[list_of_callbacks] (Optional)</li>
+      <li>error=name_of_a_function (Optional)</li>
+    </ul>
+  </li>
+  <li>Returns <code>None</code>. Data fetched is passed to the callback function, if specified.</li>
+</ul>
+
+<p>Example:</p>
+
+<pre><code class="language-python"># Callback function definition
+def hello(data):
+    print(data)
+
+# Another Callback
+def world(data):
+    with open('/home/user/.firebase-data', 'w') as data_file:
+        data_file.write(data)
+
+# Making a 'GET' request
+my_firebase.get(point="/child", auth="Ja2f29f4Gsk2d3bhxW2d8vDlK", callback=hello)
+
+# A Request with multiple callbacks
+my_firebase,get(point="/child", auth="Ja2f29f4Gsk2d3bhxW2d8vDlK", callbacks=[hello, world])
+</code></pre>
+<div class="spacefix"></div>
+<hr />
+
+<h2 id="putkwargs">.put(**kwargs)</h2>
+
+<p>Write data into your Firebase</p>
+
+<ul>
+  <li>Requires:
+    <ul>
+      <li>point=”location_to_read”</li>
+      <li>data=”data_to_put”</li>
+      <li>auth=”access_token” (Optional)</li>
+      <li>callback=name_of_a_function (Optional)</li>
+      <li>callbacks=[list_of_callbacks] (Optional)</li>
+      <li>error=name_of_a_function (Optional)</li>
+    </ul>
+  </li>
+  <li>Returns <code>None</code>. Data you just put is passed to the callback function, if specified.</li>
+</ul>
+
+<hr />
+
+<h2 id="deletekwargs">.delete(**kwargs)</h2>
+
+<p>Delete data from your Firebase</p>
+
+<ul>
+  <li>Requires:
+    <ul>
+      <li>point=”location_to_delete”</li>
+      <li>auth=”access_token” (Optional)</li>
+      <li>callback=name_of_a_function (Optional)</li>
+      <li>callbacks=[list_of_callbacks] (Optional)</li>
+      <li>error=name_of_a_function (Optional)</li>
+    </ul>
+  </li>
+  <li>Returns <code>None</code>. A string saying <code>null</code> is passed to the callback function, if specified.</li>
+</ul>
+
+<hr />
+
+<h2 id="exportkwargs">.export(**kwargs)</h2>
+
+<p>Export data from a location on your Firebase</p>
+
+<ul>
+  <li>Requires:
+    <ul>
+      <li>point=”location_to_read”</li>
+      <li>auth=”access_token” (Optional)</li>
+      <li>path=”UNIX_path_to_file_to_write_to” (Optional)</li>
+      <li>callback=name_of_a_function (Optional)</li>
+      <li>callbacks=[list_of_callbacks] (Optional)</li>
+      <li>error=name_of_a_function (Optional)</li>
+    </ul>
+  </li>
+  <li>Returns <code>None</code>. Data you just exported is passed to the callback function, if specified.</li>
+</ul>
+
+<p><strong>Note:</strong> if the <code>path</code> argument is not given, this will behave similar to <code>get()</code> method of the Firebase instance.</p>
+
+<hr />
+
+<h2 id="onchangekwargs">.onChange(**kwargs)</h2>
+
+<p>Poll for changes at a Location on your Firebase.</p>
+
+<ul>
+  <li>Requires:
+    <ul>
+      <li>point=”location_to_read”</li>
+      <li>auth=”access_token” (Optional)</li>
+      <li>callback=name_of_a_function (Optional)</li>
+      <li>callbacks=[list_of_callbacks] (Optional)</li>
+      <li>error=name_of_a_function (Optional)</li>
+      <li>ignore_error=True (Optional) - Whether to keep watching incase of an error or make it Stop</li>
+      <li>frequency=10 (Optional) - The number of seconds between checks on the Firebase</li>
+      <li>fetches=-1 (Optional) - The number of times to look at the Firebase before automatically stopping. It is a <em>positive</em> integer. Giving a negative integer makes it be ignored. </li>
+    </ul>
+  </li>
+  <li>Returns an Object representing the Watch. This object has one method:
+    <ul>
+      <li><em>.stop(number_of_seconds)</em> - Passing an integer will cause the watch to be stopped after the specified number of seconds. If no number is passed, the watch will be stopped as soon as Possible.</li>
+    </ul>
+  </li>
+</ul>
+
+<pre><code class="language-python">def keep_printing(data):
+    print(data)
+
+# Creates a watch Object
+watch = my_firebase.onChange(point="/watch_here", callback=keep_printing) 
+watch.stop(20) # The Watch will be stopped after 20 seconds
+</code></pre>
+
+<p><strong>Note:</strong> </p>
+
+<ul>
+  <li>there’s <strong>No</strong> synchronous flavor of this method. For obvious reasons.</li>
+  <li>the stopping of a watch may take longer or shorter time for the action to kick in. This depends on your System.</li>
+</ul>
+
+<h1 id="callbacks-and-errors">Callbacks and Errors</h1>
+
+<p>In all the <strong>asynchronous</strong> methods, a <strong>Callback</strong> can be assigned. The callback will be executed once response is received. In the case of <code>.onChange()</code> method, the callback will be called every time data changes at the point specified.</p>
+
+<p>Since version 0.1.2, multiple callbacks may be assigned using the <strong>callbacks</strong> parameter. The methods/functions, placed in a list and passed to the Firebase methods, will be executed sequentially as ordered in the particular list.</p>
+
+<p>Functions assigned to <strong>error</strong> are executed when an error occurs while executing the action. The following errors may be caught:</p>
+
+<ol>
+  <li><code>EnvironmentError</code>: This is caused by Trying to access a non-existant Firebase or Security Rules violation while trying to execute a query</li>
+  <li><code>KeyError</code>: This is caused when you do <strong>not</strong> pass a required argument to any function</li>
+  <li><code>ConnectionError</code>: This will occur mostly due to Network problems</li>
+</ol>
+
+<p>If you wanted to catch errors according to this classes, you could do:</p>
+
+<pre><code class="language-python">def caught_an_error(err):
+    if err.__class__.__name__ == "KeyError":
+        print("KeyError: " + str(err))
+    elif err.__class__.__name__ == "EnvironmentError":
+        print("EnvironmentError: " + str(err))
+    elif err.__class__.__name__ == "ConnectionError":
+        print("ConnectionError: " + str(err))
+    else:
+        print(err.__class__.__name__ + str(err))
+</code></pre>
+
+<p><strong>Note:</strong> All callbacks and error handling functions should be defined before assigning them to a method.</p>
+
+
+      </section>
+
+      <footer>
+  <p>This project is maintained by <a href="https://github.com/GochoMugo">GochoMugo</a></p>
+  <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a> &mdash; Jekyll'd by <a href="https://github.com/GochoMugo">Gocho Mugo</a></small></p>
+</footer>
+
+
+    </div>
+
+        <script src="/firecall/js/scale.fix.js"></script>
+<script src="/firecall/js/prism.js"></script>
+
+
+  </body>
+</html>

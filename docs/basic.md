@@ -6,20 +6,19 @@ permalink: /basic/
 
 # Getting Started
 
-1.  Import the `firebasin` library
+Import the `firebasin` library
 
-`import firecall`
+  <pre><code class="language-python">import firecall</code></pre>
 
-2.  Create a Firebase instance
+Create a Firebase instance
 
-`my\_firebase = firecall.Firebase("https://my-firebase\_name.firebaseio.com")`
+  <pre><code class="language-python">my_firebase = firecall.Firebase("https://my-firebase_name.firebaseio.com")</code></pre>
 
 While creating the Firebase instance, you might pass an access token to `auth` argument like shown below. The access token will persist across all transactions with the Firebase, unless you explicitly pass another access token to a method.
 
-```python
-my\_firebase = firebasin.Firebase("https://my-firebase\_name.firebaseio.com", auth="access\_token\_here")
-\# Ensure that you have defined the function you pass to "error=".
-```
+<pre><code class="language-python">my_firebase = firebasin.Firebase("https://my-firebase_name.firebaseio.com", auth="access_token_here")
+# Ensure that you have defined the function you pass to "error=".
+</code></pre>
 
 Firebase is now ready to be used. It's time to conquer the World.
 
@@ -28,7 +27,7 @@ Firebase is now ready to be used. It's time to conquer the World.
 
 These are the basic methods available to any Firebase
 
-`.root()`
+## .root()
 
 Get a Firebase reference to the root of the Firebase. 
 
@@ -37,12 +36,12 @@ Get a Firebase reference to the root of the Firebase.
 
 Example:
 
-```python
-print(my\_firebase.root())
-```
+<pre><code class="language-python">print(my_firebase.root())</code></pre>
+
 <hr>
 
-`.name()`
+
+## .name()
 
 Get the last token of this location's URL.
 
@@ -51,26 +50,24 @@ Get the last token of this location's URL.
 
 Example:
 
-```python
-print(my\_firebase.name())
-```
+<pre><code class="language-python">print(my_firebase.name())</code></pre>
 
 <hr>
 
-`.attr()`
+
+## .attr()
 
 Returns a tuple containing some details of the Firebase.
 
 * Requires No arguments
 * Returns a tuple e.g (time\_of\_creation, url\_of\_firebase, auth\_token)
 
-```python
-print(my\_firebase.attr())
-```
+<pre><code class="language-python">print(my_firebase.attr())</code></pre>
 
 <hr>
 
-`.parent()`
+
+## .parent()
 
 Get a Firebase instance with the parent Location as its URL
 
@@ -79,13 +76,13 @@ Get a Firebase instance with the parent Location as its URL
 
 Example:
 
-```python
-new\_parent = my\_firebase.parent()
-```
+<pre><code class="language-python">new_parent = my_firebase.parent()</code></pre>
+
 
 <hr>
 
-`.child(**kwargs)`
+
+## .child(**kwargs)
 
 Get a Firebase instance with a child location as its URL
 
@@ -95,6 +92,5 @@ Get a Firebase instance with a child location as its URL
 
 Example:
 
-```python
-new\_child = my\_firebase.child(point="/child")
-```
+<pre><code class="language-python">new_child = my_firebase.child(point="/child")</code></pre>
+

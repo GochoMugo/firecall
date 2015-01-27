@@ -5,9 +5,9 @@ description: >
 repository_url: https://github.com/GochoMugo/firecall
 repository_shorthand: GochoMugo/firecall
 
-baseurl: "https://gochomugo.github.io/firecall"
+baseurl: /firecall
 
 author_name: GochoMugo
 author_url: https://github.com/GochoMugo
 
-markdown: kramdown
+markdown: gfm
