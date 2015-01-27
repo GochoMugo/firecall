@@ -15,7 +15,7 @@ View Full documentation  [here][documentation].
 
 | Topic | Details |
 |--------|--------:|
-| Version | 0.1.2 |
+| Version | 1.0.0 |
 | Python | 2.6, 2.7, 3.2, 3.3, 3.4 |
 | Development Status | Stable |
 | Last Updated | 19th January, 2015 |
@@ -23,7 +23,7 @@ View Full documentation  [here][documentation].
 
 ## Prerequisites
 
-This library depends on the `requests` library. If you have **not** installed the [requests](docs.python-requests.org/ "Requests Home Page") library yet
+This library depends on the `requests` library. If you have **not** installed the [requests](http://docs.python-requests.org/ "Requests Home Page") library yet:
 
 ```bash
 ⇒ sudo pip install requests
@@ -35,7 +35,7 @@ This library depends on the `requests` library. If you have **not** installed th
 To Install this library:
 
 ```bash
-⇒  sudo pip install firecall
+⇒ sudo pip install firecall
 ```
 
 
@@ -44,14 +44,14 @@ To Install this library:
 Get started is easy:
 
 ```python
-# Import the Firecall
+# Import firecall
 import firecall
 
-# Create a Firebase instance
+# Create a firebase instance
 my_firebase = firecall.Firebase("https://my-firebase.firebaseio.com")
 
 # Now you are ready to use Firebase
-# For Example: (getting data from a Firebase)
+# For example: (getting data from a Firebase)
 def print_for_me(data):
     print("Just got this data: " + data)
 my_firebase.get(point="/" callback=print_for_me)
@@ -60,16 +60,16 @@ my_firebase.get(point="/" callback=print_for_me)
 
 ## Available Methods
 
-1. .root()
-* .name()
-* attr()
-* parent()
-* child()
-* .get()
-* .put()
-* .delete()
-* .export()
-* .onChange()
+1. firebase#root()
+* firebase#name()
+* firebase#attr()
+* firebase#parent()
+* firebase#child()
+* firebase#get()
+* firebase#put()
+* firebase#delete()
+* firebase#export()
+* firebase#onChange()
 
 
 # Asynchronous vs Synchronous
@@ -103,4 +103,4 @@ Copyright (c) 2014-2015 Gocho Mugo <mugo@forfuture.co.ke>
 **Conquer the World with Python**
 
 
-[documentation]:https://gochomugo.github.io/firecall/ "Full Documentation on firecall"
+[documentation]:https://gochomugo.github.io/firecall/ "Full Documentation on Firecall"
