@@ -1,11 +1,14 @@
 ---
 layout: default
 permalink: /
+no_menu: true
 ---
 
 # firecall
 
 A Python Helper Library for [Firebase](https://firebase.com/).
+
+{% include menu.html %}
 
 
 ## Quick Stats

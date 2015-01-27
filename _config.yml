@@ -10,4 +10,4 @@ baseurl: /firecall
 author_name: GochoMugo
 author_url: https://github.com/GochoMugo
 
-markdown: gfm
+markdown: kramdown

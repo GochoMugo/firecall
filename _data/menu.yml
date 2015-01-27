@@ -1,0 +1,7 @@
+menu:
+  "introduction": "/"
+  "installation": "/install/"
+  "getting started": "/basic/"
+  "asynchronous methods": "/async/"
+  "synchronous methods": "/sync/"
+  "issues": "/issues/"

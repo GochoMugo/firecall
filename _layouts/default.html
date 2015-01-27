@@ -9,8 +9,13 @@
       {% include header.html %}
 
       <section>
+        {% unless page.no_menu %}
+          {% include menu.html %}
+        {% endunless %}
 
+        <div class="main">
         {{ content }}
+        </div>
 
       </section>
 
