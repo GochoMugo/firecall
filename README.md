@@ -3,6 +3,10 @@
 
 View the [documentation][docs].
 
+## credits:
+
+Theme based on [minimal-jekyll](http://github.com/GochoMugo/minimal-jekyll) and [minimal](http://github.com/orderedlist/minimal).
+
 
 ## license:
 
