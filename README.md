@@ -1,7 +1,7 @@
 
 # Firecall
 
-A Python Helper Library for [Firebase](https://firebaseio.com/).
+A Python Helper Library for [Firebase](https://firebase.com/).
 
 View Full documentation  [here][documentation].
 
