@@ -3,3 +3,7 @@ build/
 dist/
 firecall/__pycache__/
 MANIFEST
+
+# from gh-pages branch
+_site/
+
