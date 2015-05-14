@@ -6,7 +6,7 @@ permalink: /basic/
 
 # Getting Started
 
-Import the `firebasin` library
+Import the `firecall` library
 
   <pre><code class="language-python">import firecall</code></pre>
 
@@ -16,7 +16,7 @@ Create a Firebase instance
 
 While creating the Firebase instance, you might pass an access token to `auth` argument like shown below. The access token will persist across all transactions with the Firebase, unless you explicitly pass another access token to a method.
 
-<pre><code class="language-python">my_firebase = firebasin.Firebase("https://my-firebase_name.firebaseio.com", auth="access_token_here")
+<pre><code class="language-python">my_firebase = firecall.Firebase("https://my-firebase_name.firebaseio.com", auth="access_token_here")
 # Ensure that you have defined the function you pass to "error=".
 </code></pre>
 
