@@ -25,6 +25,9 @@ A Python Helper Library for [Firebase](https://firebase.com/).
 
 ## License
 
-Source code for **firecall** is issued and licensed under the [MIT License](http://opensource.org/licenses/MIT "OSI Page for MIT License").
+**[The MIT License (MIT)](https://raw.githubusercontent.com/GochoMugo/firecall/master/LICENSE.txt)**
+
+Copyright (c) 2014-2015 Gocho Mugo <mugo@forfuture.co.ke>
 
 <center><em>Conquer the World with Python</em></center>
+
