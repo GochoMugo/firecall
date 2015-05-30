@@ -15,10 +15,10 @@ View Full documentation [here][documentation].
 
 | Topic | Details |
 |--------|--------:|
-| Version | 1.0.0 |
+| Version | 1.0.1 |
 | Python | 2.6, 2.7, 3.2, 3.3, 3.4 |
 | Development Status | Stable |
-| Last Updated | 19th January, 2015 |
+| Last Updated | 30th May, 2015 |
 
 
 ## Installation
