@@ -1,9 +1,9 @@
 
-# Firecall
+# :fire: Firecall
 
 A Python Helper Library for [Firebase](https://firebase.com/).
 
-View Full documentation  [here][documentation].
+View Full documentation [here][documentation].
 
 > __Firecall__ was previously named __Firebasin__. The change of name
 > was motivated by name clashes with other Firebase helper libraries.
@@ -15,28 +15,31 @@ View Full documentation  [here][documentation].
 
 | Topic | Details |
 |--------|--------:|
-| Version | 1.0.0 |
+| Version | 1.0.1 |
 | Python | 2.6, 2.7, 3.2, 3.3, 3.4 |
 | Development Status | Stable |
-| Last Updated | 19th January, 2015 |
-
-
-## Prerequisites
-
-This library depends on the `requests` library. If you have **not** installed the [requests](http://docs.python-requests.org/ "Requests Home Page") library yet:
-
-```bash
-⇒ sudo pip install requests
-```
+| Last Updated | 30th May, 2015 |
 
 
 ## Installation
 
-To Install this library:
+To Install this library, you have the following options:
 
-```bash
-⇒ sudo pip install firecall
-```
+1. Using [pip](https://pip.pypa.io/):
+
+  ```bash
+  ⇒ pip install firecall
+  ```
+
+1. Cloning the Github repo:
+
+  ```bash
+  ⇒ git clone https://github.com/GochoMugo/firecall
+  ⇒ cd firecall
+  ⇒ python setup.py install
+  ```
+
+> :information_source: If a `Permission denied` error occurs, you simply need to use `sudo`
 
 
 ## Getting Started
@@ -54,6 +57,7 @@ my_firebase = firecall.Firebase("https://my-firebase.firebaseio.com")
 # For example: (getting data from a Firebase)
 def print_for_me(data):
     print("Just got this data: " + data)
+
 my_firebase.get(point="/" callback=print_for_me)
 ```
 
@@ -61,15 +65,15 @@ my_firebase.get(point="/" callback=print_for_me)
 ## Available Methods
 
 1. firebase#root()
-* firebase#name()
-* firebase#attr()
-* firebase#parent()
-* firebase#child()
-* firebase#get()
-* firebase#put()
-* firebase#delete()
-* firebase#export()
-* firebase#onChange()
+1. firebase#name()
+1. firebase#attr()
+1. firebase#parent()
+1. firebase#child()
+1. firebase#get()
+1. firebase#put()
+1. firebase#delete()
+1. firebase#export()
+1. firebase#onChange()
 
 
 # Asynchronous vs Synchronous

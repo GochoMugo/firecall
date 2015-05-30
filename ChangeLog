@@ -1,3 +1,8 @@
+---------Version 1.0.1------------
+30th May 2015
+=   Fixes issue #5: async.py stop thread doesn't die on exit
+
+
 ---------Version 1.0.0------------
 19th January 2015
 +   module name change. firebasin is now firecall. This avoids name clashes.

@@ -5,7 +5,7 @@ import firecall
 setup(
     name="firecall",
     packages=["firecall"],
-    version="1.0.0",
+    version="1.0.1",
     author="Gocho Mugo I",
     author_email="mugo@forfuture.co.ke",
     url="https://gochomugo.github.io/firecall/",

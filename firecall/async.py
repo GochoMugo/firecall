@@ -30,13 +30,11 @@ class async:
         if type == "once":
             self.__request = Thread(target=self.__thread,
                                     args=(request, kwargs, callbacks, error,))
-            self.__request.start()
         if type == "watch":
-            self.__watch = None
             self.__event = Event()
             self.__request = Thread(target=self.watch,
                                     args=(request, kwargs, callbacks, error,))
-            self.__request.start()
+        self.__request.start()
 
     # Wrapper Function for the Thread
     def __thread(self, request, argv, callbacks, error):
@@ -58,10 +56,9 @@ class async:
         argv.pop("fetches", None)
         argv.pop("frequency", None)
         argv.pop("ignore_error", None)
-        self.__watch = True
         newData = None
         oldData = None
-        while self.__watch is True and fetches != 0:
+        while self.__event.is_set() is False and fetches != 0:
             try:
                 newData = request(**argv)
                 if newData != oldData and callbacks and newData:
@@ -87,7 +84,7 @@ class async:
     # The Stopper
     def __stopper(self, timeout):
         self.__event.wait(timeout)
-        self.__watch = False
+        self.__event.set() # stops any previously-created stop threads
 
 
 # Async Class for Firebase Methods
